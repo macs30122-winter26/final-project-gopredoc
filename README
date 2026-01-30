@@ -1,4 +1,18 @@
+# README
+
+## Group Member and Work Assignment 
 Each team member is responsible for at least one major component. Workload is divided as follows: 
-Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning
-Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression
+
+Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning\
+
+Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression\
+
 Luna: Building repository, lyrics textual analysis and visualization of data.
+
+## Work Records
+### 0130
+Li: Data missing due to\
+    * Network Error => solution: scrape again\
+    * Non-English Languages => skip, and restaint to utf8\
+    * Some songs just do not have lyrics => skip\
+    * inappropriate scrapy strategy
