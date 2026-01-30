@@ -1,4 +1,18 @@
-Each team member is responsible for at least one major component. Workload is divided as follows: 
-Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning
-Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression
-Luna: Building repository, lyrics textual analysis and visualization of data.
+## Team Responsibilities
+
+Each team member is responsible for at least one major component of the project. The workload is divided as follows:
+
+- **Li You**
+  - Spotify data scraping
+  - Lyrics scraping
+  - Music sentiment data cleaning
+
+- **Tingrui Zhang**
+  - Google API scraping
+  - Search frequency data cleaning
+  - Regression analysis
+
+- **Luna**
+  - Repository setup and maintenance
+  - Lyrics textual analysis
+  - Data visualization
