@@ -9,6 +9,13 @@ Tingrui Zhang: Google API scraping, search frequency data cleaning, and regressi
 
 Luna: Building repository, lyrics textual analysis and visualization of data.
 
+## Files
+
+Codes: contains code for scraping, with 3 folders:
+   Google trend scraping
+
+Data: contains scraped data.
+
 ## Work Records
 ### 0130
 Li: Data missing due to\
@@ -16,3 +23,6 @@ Li: Data missing due to\
     * Non-English Languages => skip, and restaint to utf8\
     * Some songs just do not have lyrics => skip\
     * inappropriate scrapy strategy
+
+### 0204
+Tingrui: uploaded data and code of Google trend scraping
