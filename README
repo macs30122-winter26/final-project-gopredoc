@@ -10,11 +10,12 @@ Tingrui Zhang: Google API scraping, search frequency data cleaning, and regressi
 Luna: Building repository, lyrics textual analysis and visualization of data.
 
 ## Files
-
 Codes: contains code for scraping, with 3 folders:
-   Google trend scraping
-
+   Google Trend 
+   Lyrics Scraping
+   Spotify Scraping
 Data: contains scraped data.
+README: this file
 
 ## Work Records
 ### 0130
