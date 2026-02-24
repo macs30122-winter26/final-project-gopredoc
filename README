@@ -1,13 +1,82 @@
 # README
 
-## Group Member and Work Assignment 
-Each team member is responsible for at least one major component. Workload is divided as follows: 
+## Project Description
 
-Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning\
+### Topic: 
+Music Sentiment Responses to COVID-Related Information Shocks: Evidence from Spotify and Google Search Density.
 
-Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression\
 
-Luna: Building repository, lyrics textual analysis and visualization of data.
+### Research Question(s): 
+1. How does the lyrical sentiment of trending music differ between the United States and Europe in response to the COVID-19 shock? 
+2. Does an increase in the COVID-19 shock lead to a higher variance in lyrical sentiment in the United States compared to Europe? 
+3. Does the lyrical sentiment of trending music in Europe exhibit a stronger negative correlation with the COVID-19 shock compared to the United States? 
+
+The goal of this project is to study how collective emotional expression, as reflected in popular music, responds to large-scale external shocks. We focus on the COVID-19 pandemic as a prominent global shock and examine whether increases in COVID-related public attention, measured by Google search density, are associated with changes in music sentiment. By combining web-scraped music data, API-based attention measures, and textual analysis, we explore how societies emotionally respond to large-scale shocks. The lyrical sentiment is obtained using the Transformer sentiment analysis package in Hugging Face. Furthermore, we estimate simple linear regressions to explore co-movement across regions, providing a descriptive, data-driven perspective on collective emotional dynamics during crises.
+
+## Data
+1. Spotify Top Songs: * Link: https://charts.spotify.com/
+
+    Collection Method: Scraping (Web scraping Spotify’s publicly available 'top songs' pages).
+
+
+2. Lyrics Archive (AZLyrics): * Link: https://www.azlyrics.com/
+
+    Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs).
+
+
+3. Google Search Density: * Link: https://trends.google.com/trends/
+
+    Collection Method: API (Google Trends API).
+
+## Libraries
+**Note**: Please verify these version numbers against your local virtual environment (pip freeze). We included transformers as mentioned in the proposal.
+
+undetected-chromedriver (v3.5.0)
+
+selenium (v4.10.0)
+
+beautifulsoup4 (v4.12.2)
+
+requests (v2.31.0)
+
+pandas (v2.1.0)
+
+numpy (v1.26.0)
+
+pytrends (v4.9.2)
+
+nltk (v3.8.1)
+
+scikit-learn (v1.3.0)
+
+transformers (v4.30.0)
+
+textblob (v0.17.1)
+
+langdetect (v1.0.9)
+
+## Repo Structure
+config.py, run_batch.py, scraper.py: Core Selenium scraper scripts and configuration files used for automated crawling of the Spotify Daily Top 200 charts across the globe and specific countries.
+
+Lyric_Downloader_for sharing.ipynb: A BeautifulSoup-based batch crawler to automatically download matched song lyrics from AZLyrics.
+
+scrape_search_density_EU.py & scrape_search_density_US.py: Scripts utilizing the pytrends library to fetch Google search density for COVID-related terms via the Google Trends API.
+
+data_cleansing.ipynb: Handles data merging and cleaning tasks, including deduplication, date formatting, missing value treatment, and text preprocessing (such as lowercasing, stemming, and tokenization) for the lyrics.
+
+lyrics_textanalysis.ipynb: The primary textual data analysis pipeline. Performs TF-IDF for keyword extraction, LDA for topic modeling, and calculates NLP metrics like lexical richness and word counts.
+
+Data/: Directory intended to store the raw scraped data and the cleaned output files (e.g., cleaned_lyrics_data.csv, modeling_results.csv).
+
+## Contributions
+
+Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning.
+
+
+Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression.
+
+
+Luna (Yangshunshun Lu): Building repository, lyrics textual analysis and visualization of data.
 
 ## Files
 Codes: contains code for scraping, with 3 folders:
@@ -27,3 +96,6 @@ Li: Data missing due to\
 
 ### 0204
 Tingrui: uploaded data and code of Google trend scraping
+
+### 0223
+Yangshunshun (Luna) Lu: finished data cleansing, visualization and lyrics textual analysis
