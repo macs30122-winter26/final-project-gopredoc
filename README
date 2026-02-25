@@ -2,34 +2,33 @@
 
 ## Project Description
 
-### Topic: 
+### Topic:
 Music Sentiment Responses to COVID-Related Information Shocks: Evidence from Spotify and Google Search Density.
 
+### Research Question(s):
+1. How does the lyrical sentiment of trending music differ between the United States and Europe in response to the COVID-19 shock?  
+2. Does an increase in the COVID-19 shock lead to a higher variance in lyrical sentiment in the United States compared to Europe?  
+3. Does the lyrical sentiment of trending music in Europe exhibit a stronger negative correlation with the COVID-19 shock compared to the United States?  
 
-### Research Question(s): 
-1. How does the lyrical sentiment of trending music differ between the United States and Europe in response to the COVID-19 shock? 
-2. Does an increase in the COVID-19 shock lead to a higher variance in lyrical sentiment in the United States compared to Europe? 
-3. Does the lyrical sentiment of trending music in Europe exhibit a stronger negative correlation with the COVID-19 shock compared to the United States? 
+The goal of this project is to study how collective emotional expression, as reflected in popular music, responds to large-scale external shocks. We focus on the COVID-19 pandemic as a prominent global shock and examine whether increases in COVID-related public attention, measured by Google search density, are associated with changes in music sentiment.
 
-The goal of this project is to study how collective emotional expression, as reflected in popular music, responds to large-scale external shocks. We focus on the COVID-19 pandemic as a prominent global shock and examine whether increases in COVID-related public attention, measured by Google search density, are associated with changes in music sentiment. By combining web-scraped music data, API-based attention measures, and textual analysis, we explore how societies emotionally respond to large-scale shocks. The lyrical sentiment is obtained using the Transformer sentiment analysis package in Hugging Face. Furthermore, we estimate simple linear regressions to explore co-movement across regions, providing a descriptive, data-driven perspective on collective emotional dynamics during crises.
+By combining web-scraped music data, API-based attention measures, and textual analysis, we explore how societies emotionally respond to large-scale shocks. The lyrical sentiment is obtained using the Transformer sentiment analysis package in Hugging Face. Furthermore, we estimate simple linear regressions to explore co-movement across regions, providing a descriptive, data-driven perspective on collective emotional dynamics during crises.
 
 ## Data
-1. Spotify Top Songs: * Link: https://charts.spotify.com/
 
-    Collection Method: Scraping (Web scraping Spotify’s publicly available 'top songs' pages).
+1. Spotify Top Songs: * Link: https://charts.spotify.com/  
+   Collection Method: Scraping (Web scraping Spotify’s publicly available 'top songs' pages).  
+   **02/24 Update:** Spotify Daily datasets have been uploaded. Due to file size limitations, Dropbox links are provided in a Word document located in the `Data/` folder.
 
+2. Lyrics Archive (AZLyrics): * Link: https://www.azlyrics.com/  
+   Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs).
 
-2. Lyrics Archive (AZLyrics): * Link: https://www.azlyrics.com/
-
-    Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs).
-
-
-3. Google Search Density: * Link: https://trends.google.com/trends/
-
-    Collection Method: API (Google Trends API).
+3. Google Search Density: * Link: https://trends.google.com/trends/  
+   Collection Method: API (Google Trends API).
 
 ## Libraries
-**Note**: Please verify these version numbers against your local virtual environment (pip freeze). We included transformers as mentioned in the proposal.
+
+**Note**: Please verify these version numbers against your local virtual environment (`pip freeze`). We included `transformers` as mentioned in the proposal.
 
 undetected-chromedriver (v3.5.0)
 
@@ -56,6 +55,7 @@ textblob (v0.17.1)
 langdetect (v1.0.9)
 
 ## Repo Structure
+
 config.py, run_batch.py, scraper.py: Core Selenium scraper scripts and configuration files used for automated crawling of the Spotify Daily Top 200 charts across the globe and specific countries.
 
 Lyric_Downloader_for sharing.ipynb: A BeautifulSoup-based batch crawler to automatically download matched song lyrics from AZLyrics.
@@ -66,36 +66,52 @@ data_cleansing.ipynb: Handles data merging and cleaning tasks, including dedupli
 
 lyrics_textanalysis.ipynb: The primary textual data analysis pipeline. Performs TF-IDF for keyword extraction, LDA for topic modeling, and calculates NLP metrics like lexical richness and word counts.
 
-Data/: Directory intended to store the raw scraped data and the cleaned output files (e.g., cleaned_lyrics_data.csv, modeling_results.csv).
+Data/: Directory intended to store the raw scraped data and the cleaned output files (e.g., cleaned_lyrics_data.csv, modeling_results.csv).  
+**02/24 Update:** Includes a Word document containing Dropbox links to Spotify Daily datasets.
+
+Figure 1: A simple overview figure showing the relationship between COVID-related Google search density and lyrical sentiment over time.
+
+Figure 2: A simple comparison figure showing differences in lyrical sentiment responses between the U.S. and Europe.
+
+Figure 3: A simple figure showing sentiment variance dynamics across regions during the COVID-related shock period.
 
 ## Contributions
 
 Li You: Spotify scraping, lyrics scraping, and music sentiment data cleaning.
 
-
 Tingrui Zhang: Google API scraping, search frequency data cleaning, and regression.
-
 
 Luna (Yangshunshun Lu): Building repository, lyrics textual analysis and visualization of data.
 
 ## Files
-Codes: contains code for scraping, with 3 folders:
-   Google Trend 
-   Lyrics Scraping
-   Spotify Scraping
-Data: contains scraped data.
+
+Codes: contains code for scraping, with 3 folders:  
+   Google Trend  
+   Lyrics Scraping  
+   Spotify Scraping  
+
+Data: contains scraped data, and a Word file with Dropbox links to Spotify Daily datasets (02/24 update).
+
 README: this file
 
 ## Work Records
+
 ### 0130
 Li: Data missing due to\
     * Network Error => solution: scrape again\
-    * Non-English Languages => skip, and restaint to utf8\
+    * Non-English Languages => skip, and restrict to UTF-8\
     * Some songs just do not have lyrics => skip\
-    * inappropriate scrapy strategy
+    * Inappropriate scraping strategy
 
 ### 0204
-Tingrui: uploaded data and code of Google trend scraping
+Tingrui: Uploaded data and code of Google Trends scraping
 
 ### 0223
-Yangshunshun (Luna) Lu: finished data cleansing, visualization and lyrics textual analysis
+Yangshunshun (Luna) Lu: Finished data cleansing, visualization and lyrics textual analysis
+
+### 0224
+Li:\
+    * Uploaded Spotify Daily datasets (Dropbox links stored in a Word file under `Data/`)\
+    * Uploaded Figure 1 (simple overview figure)\
+    * Uploaded Figure 2 (simple regional comparison figure)\
+    * Uploaded Figure 3 (simple sentiment variance figure)
