@@ -127,4 +127,4 @@ Li:\
     * Added `lyrics_textual_analysis.ipynb` in `Textual Analysis/`\
     * Added `musixmatch_fill_lyrics.ipynb` in `Textual Analysis/`\
     * Added `lyrics_downloaded.zip` in `Data/`\
-    * Updated repository file structure in README (added `Cleansing/`, `EDA/`, `Visualization/`, and `ProgressReport-check2.pdf`)
+    * Updated repository file structure in README
