@@ -16,12 +16,12 @@ By combining web-scraped music data, API-based attention measures, and textual a
 
 ## Data
 
-1. Spotify Top Songs: * Link: https://charts.spotify.com/  
+1. Spotify Top Songs: * Link: https://charts.spotify.com/  https://docs.musixmatch.com/lyrics-api/
    Collection Method: Scraping (Web scraping Spotify’s publicly available 'top songs' pages).  
    **02/24 Update:** Spotify Daily datasets have been uploaded. Due to file size limitations, Dropbox links are provided in a Word document located in the `Data/` folder.
 
-2. Lyrics Archive (AZLyrics): * Link: https://www.azlyrics.com/  
-   Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs).
+2. Lyrics : * Link: https://www.azlyrics.com/  
+   Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs). And we use Musixmatch API for filling NA song data.
 
 3. Google Search Density: * Link: https://trends.google.com/trends/  
    Collection Method: API (Google Trends API).
@@ -56,24 +56,26 @@ langdetect (v1.0.9)
 
 ## Repo Structure
 
-config.py, run_batch.py, scraper.py: Core Selenium scraper scripts and configuration files used for automated crawling of the Spotify Daily Top 200 charts across the globe and specific countries.
+Cleansing/: Data cleaning and preprocessing notebooks/scripts.
 
-Lyric_Downloader_for sharing.ipynb: A BeautifulSoup-based batch crawler to automatically download matched song lyrics from AZLyrics.
+Codes/: Scraping and data collection code, with subfolders for:
+- Google Trend
+- Lyrics Scraping
+- Spotify Scraping
 
-scrape_search_density_EU.py & scrape_search_density_US.py: Scripts utilizing the pytrends library to fetch Google search density for COVID-related terms via the Google Trends API.
+Data/: Scraped and processed data files.  
+**02/24 Update:** Includes a Word document containing Dropbox links to Spotify Daily datasets, and `lyrics_downloaded.zip`.
 
-data_cleansing.ipynb: Handles data merging and cleaning tasks, including deduplication, date formatting, missing value treatment, and text preprocessing (such as lowercasing, stemming, and tokenization) for the lyrics.
+EDA/: Exploratory data analysis files and notebooks.
 
-lyrics_textanalysis.ipynb: The primary textual data analysis pipeline. Performs TF-IDF for keyword extraction, LDA for topic modeling, and calculates NLP metrics like lexical richness and word counts.
+Textual Analysis/: Lyrics text analysis notebooks and related files.  
+**02/24 Update:** Added `lyrics_textual_analysis.ipynb` and `musixmatch_fill_lyrics.ipynb`.
 
-Data/: Directory intended to store the raw scraped data and the cleaned output files (e.g., cleaned_lyrics_data.csv, modeling_results.csv).  
-**02/24 Update:** Includes a Word document containing Dropbox links to Spotify Daily datasets.
+Visualization/: Visualization notebooks/figures for result presentation.
 
-Figure 1: A simple overview figure showing the relationship between COVID-related Google search density and lyrical sentiment over time.
+ProgressReport-check2.pdf: Project progress report (check 2).
 
-Figure 2: A simple comparison figure showing differences in lyrical sentiment responses between the U.S. and Europe.
-
-Figure 3: A simple figure showing sentiment variance dynamics across regions during the COVID-related shock period.
+README: This file.
 
 ## Contributions
 
@@ -85,14 +87,24 @@ Luna (Yangshunshun Lu): Building repository, lyrics textual analysis and visuali
 
 ## Files
 
+Cleansing: contains data cleaning and preprocessing files.
+
 Codes: contains code for scraping, with 3 folders:  
    Google Trend  
    Lyrics Scraping  
    Spotify Scraping  
 
-Data: contains scraped data, and a Word file with Dropbox links to Spotify Daily datasets (02/24 update).
+Data: contains scraped data, a Word file with Dropbox links to Spotify Daily datasets (02/24 update), and `lyrics_downloaded.zip`.
 
-README: this file
+EDA: contains exploratory data analysis files.
+
+Textual Analysis: contains lyric text analysis notebooks, including `lyrics_textual_analysis.ipynb` and `musixmatch_fill_lyrics.ipynb`.
+
+Visualization: contains visualization files and notebooks.
+
+ProgressReport-check2.pdf: progress report file.
+
+README: this file.
 
 ## Work Records
 
@@ -112,6 +124,7 @@ Yangshunshun (Luna) Lu: Finished data cleansing, visualization and lyrics textua
 ### 0224
 Li:\
     * Uploaded Spotify Daily datasets (Dropbox links stored in a Word file under `Data/`)\
-    * Uploaded Figure 1 (simple overview figure)\
-    * Uploaded Figure 2 (simple regional comparison figure)\
-    * Uploaded Figure 3 (simple sentiment variance figure)
+    * Added `lyrics_textual_analysis.ipynb` in `Textual Analysis/`\
+    * Added `musixmatch_fill_lyrics.ipynb` in `Textual Analysis/`\
+    * Added `lyrics_downloaded.zip` in `Data/`\
+    * Updated repository file structure in README (added `Cleansing/`, `EDA/`, `Visualization/`, and `ProgressReport-check2.pdf`)
