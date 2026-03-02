@@ -110,7 +110,7 @@ for f in csv_files:
     merged = top.merge(lyrics_master, on="uri_norm", how="left")
 
     row_cov = merged["lyrics"].notna().mean()
-    # EXACT diagnostic-style track match rate:
+    # diagnostic-style track match rate:
     top_uris = set(top["uri_norm"].dropna().unique())
     
     intersection = top_uris & lyr_uris

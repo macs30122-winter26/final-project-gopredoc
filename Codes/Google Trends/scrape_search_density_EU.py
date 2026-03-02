@@ -26,7 +26,7 @@ import time
 pytrends = TrendReq(hl="en-US", tz=360)
 
 query = ["COVID"]
-timeframe = "2020-01-01 2023-12-31"
+timeframe = "2020-01-01 2024-12-31"
 
 all_data = []
 

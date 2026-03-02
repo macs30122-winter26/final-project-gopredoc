@@ -1,24 +1,31 @@
-import pytrends
-
 from pytrends.request import TrendReq
 import pandas as pd
 
-pytrends = TrendReq(hl="en-US", tz=360)  # tz is minutes offset from UTC (e.g., 360 = UTC-6)
+# 1) Connect
+pytrends = TrendReq(hl="en-US", tz=360)
 
-kw_list = ["COVID", "COVID symptoms", "COVID vaccine"]  # pick your terms
+# 2) Parameters
+kw_list = ["COVID", "COVID symptoms", "COVID vaccine"]
+geo = "US"
+timeframe = "2020-01-01 2024-12-31"   # multi-year => weekly data from Google Trends
+gprop = ""                            # web search; or "news", "youtube", etc.
+
+# 3) Weekly interest over time
 pytrends.build_payload(
     kw_list=kw_list,
     cat=0,
-    timeframe="2020-01-01 2025-12-31",  # or "today 5-y", "today 12-m", etc.
-    geo="US",                           # "" for worldwide; e.g. "GB", "CN" (often limited), "US-IL"
-    gprop=""                            # ""=web search; "news", "images", "youtube", "froogle"
+    timeframe=timeframe,
+    geo=geo,
+    gprop=gprop
 )
 
-df = pytrends.interest_over_time()
-df = df.drop(columns=["isPartial"], errors="ignore")
-print(df.head())
+weekly = pytrends.interest_over_time()
+weekly = weekly.drop(columns=["isPartial"], errors="ignore")
 
-df.to_csv("google_trends_covid_us.csv")
+# Make sure date is a column (useful for merges)
+weekly = weekly.reset_index()  # columns: date, <kw1>, <kw2>, ...
 
-region = pytrends.interest_by_region(resolution="REGION", inc_low_vol=True, inc_geo_code=False)
-region.to_csv("covid_trends_by_region.csv")
+weekly.to_csv("google_trends_us_weekly.csv", index=False)
+print("Saved:", "google_trends_us_weekly.csv")
+print(weekly.head())
+
