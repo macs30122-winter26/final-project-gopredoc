@@ -61,6 +61,20 @@ weekly = (
       .agg(agg)
 )
 
+# ---------- standardize (z-score) within country ----------
+# columns to standardize = all numeric columns except the date key
+num_cols_weekly = weekly.select_dtypes(include="number").columns.tolist()
+
+def zscore(s: pd.Series) -> pd.Series:
+    sd = s.std(ddof=0)
+    if sd == 0 or pd.isna(sd):
+        return pd.Series(pd.NA, index=s.index)
+    return (s - s.mean()) / sd
+
+for c in num_cols_weekly:
+    weekly[f"{c}_z"] = weekly.groupby("country")[c].transform(zscore)
+
+
 # ---------- save ----------
 weekly.to_csv(OUT_WEEKLY, index=False)
 print("Saved weekly dataset:", OUT_WEEKLY)

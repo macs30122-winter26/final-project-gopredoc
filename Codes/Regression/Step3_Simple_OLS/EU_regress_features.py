@@ -41,16 +41,18 @@ for country, sub in df.groupby(COUNTRY_COL, sort=False):
         continue
 
     for feature in FEATURES:
-        y = sub[feature]
-        X = sm.add_constant(sub[[COVID_COL, "t"]])
+        # ---- Y and X reversed ----
+        y = sub[COVID_COL]
+        X = sm.add_constant(sub[[feature, "t"]])
+
         model = sm.OLS(y, X).fit()
 
         country_results.append({
             "country": country,
             "feature": feature.replace("_z_within_country", ""),
-            "beta_COVID_std": model.params[COVID_COL],
-            "se_COVID": model.bse[COVID_COL],
-            "p_COVID": model.pvalues[COVID_COL],
+            "beta_feature_std": model.params[feature],
+            "se_feature": model.bse[feature],
+            "p_feature": model.pvalues[feature],
             "beta_trend": model.params["t"],
             "se_trend": model.bse["t"],
             "p_trend": model.pvalues["t"],
@@ -60,7 +62,7 @@ for country, sub in df.groupby(COUNTRY_COL, sort=False):
 
 country_results_df = pd.DataFrame(country_results)
 
-OUT_COUNTRY = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_feature_regressions_with_trend.csv"
+OUT_COUNTRY = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_COVID_on_features_with_trend_country.csv"
 country_results_df.to_csv(OUT_COUNTRY, index=False)
 
 print("Saved country-level regressions to:", OUT_COUNTRY)
@@ -70,22 +72,23 @@ print("Saved country-level regressions to:", OUT_COUNTRY)
 # 2️⃣ POOLED EUROPE REGRESSIONS
 # ============================================================
 
-# Create pooled Europe time trend
 df = df.sort_values(DATE_COL).copy()
 df["t_europe"] = (df[DATE_COL] - df[DATE_COL].min()).dt.days / 7
 
 europe_results = []
 
 for feature in FEATURES:
-    y = df[feature]
-    X = sm.add_constant(df[[COVID_COL, "t_europe"]])
+    # ---- Y and X reversed ----
+    y = df[COVID_COL]
+    X = sm.add_constant(df[[feature, "t_europe"]])
+
     model = sm.OLS(y, X).fit()
 
     europe_results.append({
         "feature": feature.replace("_z_within_country", ""),
-        "beta_COVID_std": model.params[COVID_COL],
-        "se_COVID": model.bse[COVID_COL],
-        "p_COVID": model.pvalues[COVID_COL],
+        "beta_feature_std": model.params[feature],
+        "se_feature": model.bse[feature],
+        "p_feature": model.pvalues[feature],
         "beta_trend": model.params["t_europe"],
         "se_trend": model.bse["t_europe"],
         "p_trend": model.pvalues["t_europe"],
@@ -95,7 +98,7 @@ for feature in FEATURES:
 
 europe_results_df = pd.DataFrame(europe_results)
 
-OUT_EUROPE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_pooled_feature_regressions_with_trend.csv"
+OUT_EUROPE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_COVID_on_features_with_trend_pooled.csv"
 europe_results_df.to_csv(OUT_EUROPE, index=False)
 
 print("Saved pooled Europe regressions to:", OUT_EUROPE)

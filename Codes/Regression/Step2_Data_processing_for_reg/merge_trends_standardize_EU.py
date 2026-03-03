@@ -5,7 +5,7 @@ from pathlib import Path
 EU_FEATURE_DIR = Path(r"C:\Users\26540\Desktop\match_output_features\cleaned\top200_weekly_means_direct\EU")
 EU_TRENDS_FILE = Path(r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Data\Google Trends\covid_trends_europe.csv")  # uploaded here; replace with your local path if needed
 
-OUT_STD    = EU_FEATURE_DIR / "EU_top200_weekly_means_merged_trends.csv"
+OUT_STD    = EU_FEATURE_DIR / "EU_top200_weekly_means_merged_trends_STD.csv"
 
 # ---------- columns to standardize ----------
 FEATURE_COLS = [
