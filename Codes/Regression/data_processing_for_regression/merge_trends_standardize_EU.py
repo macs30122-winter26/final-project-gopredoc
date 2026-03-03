@@ -2,11 +2,10 @@ import pandas as pd
 from pathlib import Path
 
 # ---------- paths ----------
-EU_FEATURE_DIR = Path(r"C:\Users\26540\Desktop\match_output_features\cleaned\top200_weekly_means_direct")
+EU_FEATURE_DIR = Path(r"C:\Users\26540\Desktop\match_output_features\cleaned\top200_weekly_means_direct\EU")
 EU_TRENDS_FILE = Path(r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Data\Google Trends\covid_trends_europe.csv")  # uploaded here; replace with your local path if needed
 
-OUT_MERGED = EU_FEATURE_DIR / "EU_top200_weekly_means_merged_trends.csv"
-OUT_STD    = EU_FEATURE_DIR / "EU_top200_weekly_means_merged_trends_STD.csv"
+OUT_STD    = EU_FEATURE_DIR / "EU_top200_weekly_means_merged_trends.csv"
 
 # ---------- columns to standardize ----------
 FEATURE_COLS = [
@@ -54,18 +53,8 @@ for fp in feature_files:
 
 feat = pd.concat(panels, ignore_index=True)
 
-# ---------- (optional) country name harmonization ----------
-country_map = {
-    "UK": "United Kingdom",
-    "Czechia": "Czech Republic",
-}
-feat["country"] = feat["country"].replace(country_map)
-tr["country"]   = tr["country"].replace(country_map)
-
 # ---------- merge ----------
 merged = feat.merge(tr, on=["country", "date"], how="left")
-merged.to_csv(OUT_MERGED, index=False, encoding="utf-8-sig")
-print(f"Saved merged panel: {OUT_MERGED}")
 
 # ---------- ensure numeric for standardization ----------
 cols_to_z = [c for c in FEATURE_COLS if c in merged.columns]
@@ -80,7 +69,7 @@ for c in cols_to_z:
 # drop rows missing any variables we standardize (keeps zscores well-defined)
 std_df = merged.dropna(subset=cols_to_z).copy()
 
-# ---------- GLOBAL standardization (like US) ----------
+# ---------- GLOBAL standardization ----------
 # Within-country z-scores
 for c in cols_to_z:
     std_df[c + "_z_within_country"] = std_df.groupby("country")[c].transform(
