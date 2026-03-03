@@ -2,7 +2,7 @@ import pandas as pd
 import statsmodels.api as sm
 
 # ---- load data ----
-FILE = r"C:/Users/26540/Desktop/match_output_features/cleaned/top200_weekly_means_direct/USA_top200_weekly_means_merged_trends.csv"
+FILE = r"C:/Users/26540/Desktop/match_output_lyrics_features_sentiment/cleaned/top200_weekly_means_direct/USA_top200_weekly_means_merged_trends.csv"
 df = pd.read_csv(FILE)
 
 # ---- clean column names ----
@@ -10,7 +10,7 @@ df.columns = df.columns.str.strip()
 
 FEATURES = [
     "danceability", "energy", "loudness", "speechiness",
-    "acousticness", "instrumentalness", "liveness", "valence"
+    "acousticness", "instrumentalness", "liveness", "valence","text_sentiment"
 ]
 
 # ---- numeric ----
@@ -48,7 +48,7 @@ for feature in FEATURES:
 
 results_df = pd.DataFrame(results)
 
-OUT_FILE = r"C:/Users/26540/Desktop/match_output_features/cleaned/top200_weekly_means_direct/USA_weekly_feature_regressions_std_with_trend.csv"
+OUT_FILE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\USA_feature_regressions_with_trend.csv"
 results_df.to_csv(OUT_FILE, index=False)
 
 print(results_df)

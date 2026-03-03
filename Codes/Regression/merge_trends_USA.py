@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 # ---- paths ----
-FEATURES_FILE = Path(r"C:\Users\26540\Desktop\match_output_features\cleaned\top200_weekly_means_direct\USA_top200_weekly_means.csv")
+FEATURES_FILE = Path(r"C:\Users\26540\Desktop\match_output_lyrics_features_sentiment\cleaned\top200_weekly_means_direct\USA_top200_weekly_means.csv")
 TRENDS_FILE   = Path(r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Data\Google Trends\google_trends_us_weekly.csv")
 
 OUT_FILE = FEATURES_FILE.parent / "USA_top200_weekly_means_merged_trends.csv"
@@ -12,7 +12,7 @@ feat = pd.read_csv(FEATURES_FILE, low_memory=False)
 tr   = pd.read_csv(TRENDS_FILE, low_memory=False)
 
 # ---- standardize date column names ----
-# features file might have "week" or "date" depending on how it was created
+# features have "week" not "date"
 if "date" not in feat.columns and "week" in feat.columns:
     feat = feat.rename(columns={"week": "date"})
 elif "date" not in feat.columns:

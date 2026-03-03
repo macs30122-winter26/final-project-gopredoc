@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 # ---- config ----
-IN_DIR  = Path(r"C:\Users\26540\Desktop\match_output_features")
+IN_DIR  = Path(r"C:\Users\26540\Desktop\match_output_lyrics_features_sentiment")
 OUT_DIR = IN_DIR / "cleaned"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 

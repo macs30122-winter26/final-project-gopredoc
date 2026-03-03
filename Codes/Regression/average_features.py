@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 
 # ---- directories ----
-IN_DIR = Path(r"C:\Users\26540\Desktop\match_output_features\cleaned")
+IN_DIR = Path(r"C:\Users\26540\Desktop\match_output_lyrics_features_sentiment\cleaned")
 OUT_DIR = IN_DIR / "top200_weekly_means_direct"
 OUT_DIR.mkdir(exist_ok=True)
 
@@ -19,10 +19,10 @@ WEEK_COL = "week"
 
 FEATURE_COLS = [
     "danceability", "energy", "loudness", "speechiness",
-    "acousticness", "instrumentalness", "liveness", "valence",
+    "acousticness", "instrumentalness", "liveness", "valence","text_sentiment"
 ]
 
-files = sorted(IN_DIR.glob("*_with_lyrics_and_features.csv"))
+files = sorted(IN_DIR.glob("*_with_lyrics_features_sentiment.csv"))
 print(f"Found {len(files)} country files in {IN_DIR}")
 
 all_country_weeks = []
