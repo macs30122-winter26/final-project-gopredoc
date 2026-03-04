@@ -16,11 +16,11 @@ By combining web-scraped music data, API-based attention measures, and textual a
 
 ## Data
 
-1. Spotify Top Songs: * Link: https://charts.spotify.com/  https://docs.musixmatch.com/lyrics-api/
+1. Spotify Top Songs: * Link: https://charts.spotify.com/  
    Collection Method: Scraping (Web scraping Spotify’s publicly available 'top songs' pages).  
    **02/24 Update:** Spotify Daily datasets have been uploaded. Due to file size limitations, Dropbox links are provided in a Word document located in the `Data/` folder.
 
-2. Lyrics : * Link: https://www.azlyrics.com/  
+2. Lyrics : * Link: https://www.azlyrics.com/  https://docs.musixmatch.com/lyrics-api/
    Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs). And we use Musixmatch API for filling NA song data.
 
 3. Music Attributes : * Link:  https://annas-archive.pm/blog/backing-up-spotify.html
