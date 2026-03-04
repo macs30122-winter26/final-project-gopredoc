@@ -23,7 +23,10 @@ By combining web-scraped music data, API-based attention measures, and textual a
 2. Lyrics : * Link: https://www.azlyrics.com/  
    Collection Method: Scraping (Obtained through scraping AZLyrics, an internet archive website containing lyrics of almost all songs). And we use Musixmatch API for filling NA song data.
 
-3. Google Search Density: * Link: https://trends.google.com/trends/  
+3. Music Attributes : * Link:  https://annas-archive.pm/blog/backing-up-spotify.html
+   Collection Method: This website has stored music features from most of the Spotify dataset. We simply downloaded them.
+
+4. Google Search Density: * Link: https://trends.google.com/trends/  
    Collection Method: API (Google Trends API).
 
 ## Libraries
