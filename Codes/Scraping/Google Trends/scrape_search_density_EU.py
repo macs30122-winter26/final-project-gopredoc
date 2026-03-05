@@ -1,3 +1,14 @@
+'''
+Scrape weekly Google search intensity data
+for word "COVID"
+from 2020-01-01 2024-12-31
+for all countries in Europe.
+
+Tingrui Zhang
+No AI is used in this code.
+'''
+
+# build EU dict
 EU_COUNTRIES = {
     "Germany": "DE",
     "France": "FR",
@@ -18,18 +29,20 @@ EU_COUNTRIES = {
     "Czech Republic": "CZ",
 }
 
-
 from pytrends.request import TrendReq
 import pandas as pd
 import time
 
+# create connect object
 pytrends = TrendReq(hl="en-US", tz=360)
 
+# parameters
 query = ["COVID"]
 timeframe = "2020-01-01 2024-12-31"
 
 all_data = []
 
+# create loop, scrape density for each country
 for country, code in EU_COUNTRIES.items():
     pytrends.build_payload(
         kw_list=query,
@@ -38,6 +51,7 @@ for country, code in EU_COUNTRIES.items():
     )
     df = pytrends.interest_over_time()
 
+    # append each country's data
     if not df.empty:
         df = df.reset_index()
         df["country"] = country
@@ -45,5 +59,6 @@ for country, code in EU_COUNTRIES.items():
 
     time.sleep(2)  # avoid Google rate limits
 
+# stack all df
 eu_covid = pd.concat(all_data, ignore_index=True)
 eu_covid.to_csv("covid_trends_europe.csv", index=False)
