@@ -1,3 +1,23 @@
+"""
+Predict future COVID search intensity using Spotify audio features 
+and lyric sentiment, with restricted database provided by Luna.
+
+Model specification:
+
+    COVID_{t+L} = β0 + β1 Feature1_t + ... + βk Featurek_t + β Sentiment + ε_t
+
+where:
+    L = number of weeks ahead (LAG_WEEKS)
+
+Outputs:
+    Regression summary for the training model
+    Out-of-sample prediction metrics (RMSE, R²)
+    Visualization comparing actual and predicted values
+
+Tingrui Zhang
+AI statement: AI is used to enhance robustness of this file.
+"""
+
 import pandas as pd
 import statsmodels.api as sm
 import numpy as np
@@ -10,14 +30,13 @@ df = pd.read_csv(FILE)
 df.columns = df.columns.str.strip()
 df["date"] = pd.to_datetime(df["date"])
 
-# ==============================
 # RESTRICT TO USA ONLY
-# ==============================
 df = df[df["country"] == "USA"].copy()
 df = df.sort_values("date")
 
 COVID = "COVID_z"
 
+# includes all features and sentiment
 FEATURES = [
     "danceability_z",
     "energy_z",
@@ -30,43 +49,39 @@ FEATURES = [
     "text_sentiment_z"
 ]
 
-# ==============================
+
 # CREATE FORWARD LAG
-# ==============================
+
 LAG_WEEKS = 3
-
 df["COVID_future"] = df[COVID].shift(-LAG_WEEKS)
-
 df = df.dropna(subset=["COVID_future"] + FEATURES)
 
-# ==============================
+
 # SPLIT SAMPLE
-# ==============================
+
 train = df[(df["date"] >= "2020-01-01") & (df["date"] <= "2021-7-1")].copy()
 test  = df[(df["date"] >  "2021-7-1") & (df["date"] <= "2022-1-1")].copy()
 
-# ==============================
+
 # FIT MODEL
-# ==============================
+
 y_train = train["COVID_future"]
 X_train = sm.add_constant(train[FEATURES])
-
 model = sm.OLS(y_train, X_train).fit()
 
 print(f"\nTraining summary (USA only, Predict COVID +{LAG_WEEKS} weeks):")
 print(model.summary())
 
-# ==============================
-# PREDICT
-# ==============================
-train["fitted_future"] = model.predict(X_train)
 
+# PREDICT
+
+train["fitted_future"] = model.predict(X_train)
 X_test = sm.add_constant(test[FEATURES])
 test["forecast_future"] = model.predict(X_test)
 
-# ==============================
+
 # EVALUATE
-# ==============================
+
 rmse = np.sqrt(mean_squared_error(test["COVID_future"], test["forecast_future"]))
 r2_out = r2_score(test["COVID_future"], test["forecast_future"])
 
@@ -74,9 +89,9 @@ print("\nOut-of-sample performance:")
 print("RMSE:", rmse)
 print("Out-of-sample R2:", r2_out)
 
-# ==============================
+
 # PLOT
-# ==============================
+
 plot_df = df[(df["date"] >= "2020-01-01") &
              (df["date"] <= "2022-01-01")].copy()
 

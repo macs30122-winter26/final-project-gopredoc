@@ -5,7 +5,7 @@ from 2020-01-01 2024-12-31
 in United States.
 
 Tingrui Zhang
-AI is used to improve robustness of this code.
+AI statement: AI is used to improve robustness of this code.
 '''
 
 from pytrends.request import TrendReq

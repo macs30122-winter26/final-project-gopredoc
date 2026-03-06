@@ -5,7 +5,7 @@ from 2020-01-01 2024-12-31
 for all countries in Europe.
 
 Tingrui Zhang
-No AI is used in this code.
+AI statement: No AI is used in this code.
 '''
 
 # build EU dict

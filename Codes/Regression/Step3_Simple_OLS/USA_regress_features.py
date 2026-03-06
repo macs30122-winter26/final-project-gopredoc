@@ -1,3 +1,12 @@
+"""
+Run OLS regression of COVID search intensity on Spotify audio features
+and a time trend using the standardized USA weekly panel dataset.
+
+Tingrui Zhang
+AI statement: AI is used to enhance robustness of this file.
+"""
+
+
 import pandas as pd
 import statsmodels.api as sm
 
@@ -13,7 +22,7 @@ FEATURES = [
     "acousticness", "instrumentalness", "liveness", "valence"
 ]
 
-# We will use the *_z columns that already exist in the STD file
+# use the *_z columns that already exist in the STD file
 FEATURES_Z = [f"{c}_z" for c in FEATURES]
 COVID_Z = "COVID_z"
 
@@ -32,7 +41,7 @@ df["trend"] = range(len(df))  # simple linear trend (0,1,2,...)
 results = []
 
 for feature, feature_z in zip(FEATURES, FEATURES_Z):
-    y = df[feature_z]  # <-- already standardized
+    y = df[feature_z]  
     X = sm.add_constant(df[[COVID_Z, "trend"]])
 
     model = sm.OLS(y, X).fit()  # SIMPLE OLS (no robust SE)

@@ -1,3 +1,14 @@
+"""
+This file:
+1. Merges USA weekly Spotify feature panels with Google Trends COVID search data 
+2. Computes within-country standardized variables.
+3. Outputs dataset containing the merged panel and standardized variables
+(e.g., danceability_z_within_country).
+
+Tingrui Zhang
+AI statement: AI is used to enhance robustness of this file.
+"""
+
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -12,14 +23,11 @@ OUT_FILE = FEATURES_FILE.parent / "USA_top200_weekly_means_merged_trends_STD.csv
 feat = pd.read_csv(FEATURES_FILE, low_memory=False)
 tr   = pd.read_csv(TRENDS_FILE, low_memory=False)
 
-# ---- rename week → date if needed ----
+# standardize date col name
 if "date" not in feat.columns and "week" in feat.columns:
     feat = feat.rename(columns={"week": "date"})
-elif "date" not in feat.columns:
-    raise KeyError(f"Features file missing weekly date column. Found: {list(feat.columns)}")
-
-if "date" not in tr.columns:
-    raise KeyError(f"Trends file missing 'date'. Found: {list(tr.columns)}")
+if "date" not in feat.columns:
+    raise KeyError(f"{feat.name} missing 'date' (or 'week'). Columns: {list(feat.columns)}")
 
 # ---- parse dates ----
 feat["date"] = pd.to_datetime(feat["date"], errors="coerce")
@@ -35,9 +43,8 @@ tr = tr.rename(columns=lambda c: c.strip())
 # ---- merge ----
 merged = feat.merge(tr, on="date", how="left", validate="one_to_one")
 
-# =====================================================
-# -------- STANDARDIZATION SECTION --------------------
-# =====================================================
+
+# -------- STANDARDIZATION --------------------
 
 FEATURE_COLS = [
     "danceability", "energy", "loudness", "speechiness",
@@ -66,7 +73,6 @@ for c in FEATURE_COLS:
 # Standardize COVID
 merged["COVID_z"] = zscore(merged["COVID"])
 
-# =====================================================
 
 # ---- diagnostics ----
 trend_cols = [c for c in tr.columns if c != "date"]

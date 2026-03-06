@@ -1,5 +1,6 @@
 """
-Match daily Spotify Top-200 chart files to a lyrics database via track URI.
+Used ONLY before merging with features.
+Merge daily Spotify Top-200 chart files with lyrics database on track URI.
 Tingrui Zhang
 
 Outputs:
@@ -16,21 +17,21 @@ from pathlib import Path
 import pandas as pd
 
 # ---------- configure ----------
+# these files are local; please download file via link to run this code.
 TOP200_DIR = Path("C:/Users/26540/Desktop/Spotify_daily_top200")
 LYRICS_PATHS = [
     Path("C:/Users/26540/Desktop/Lyrics_downloaded/covered_Li_with_lyrics_progress.csv"),
     Path("C:/Users/26540/Desktop/Lyrics_downloaded/covered_with_lyrics_progress_WX.csv"),
     Path("C:/Users/26540/Desktop/Lyrics_downloaded/covered_with_lyrics_progress_DC.csv"),
 ]
-OUT_DIR = Path("C:/Users/26540/Desktop/match_output")
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = Path("C:/Users/26540/Desktop/match_output") # create new directory
+OUT_DIR.mkdir(parents=True, exist_ok=True)  
 
 
 # ---------- helpers ----------
 def read_csv_robust(path: Path) -> pd.DataFrame:
     """
     Read a CSV with encoding fallbacks to avoid UnicodeDecodeError.
-
     Tries a few common encodings; if all fail, re-reads with UTF-8 
     and replaces bad bytes.
     """
@@ -115,11 +116,11 @@ for p in LYRICS_PATHS:
     lyr_col = pick_col(df, ["lyrics", "lyric", "text"], ["lyric"])
 
     # Keep only relevant columns and normalize URIs for joining
-    # # tmp = | original_uri_column | original_lyrics_column |
+    # tmp = | original_uri_column | original_lyrics_column |
     tmp = df[[uri_col, lyr_col]].copy() 
     # standardize names
     tmp.rename(columns={uri_col: "uri_any", lyr_col: "lyrics"}, inplace=True) 
-    # converts everything into spotify:track:xxxxx
+    # converts uri into spotify:track:xxxxx
     tmp["uri_norm"] = tmp["uri_any"].map(normalize_spotify_uri)
     tmp = tmp.dropna(subset=["uri_norm"])
 
@@ -136,6 +137,7 @@ lyrics_master = (
     .drop(columns="lyr_len")
 )
 
+# quick check: unique tracks with lyrics
 lyr_uris = set(lyrics_master["uri_norm"].dropna().unique())
 print("Master lyrics unique tracks:", lyrics_master["uri_norm"].nunique())
 
@@ -149,7 +151,7 @@ summary: list[dict] = []
 for f in csv_files:
     top = read_csv_robust(f)
 
-    # Detect URI column and normalize for joining
+    # detect URI column and normalize for joining
     top_uri_col = pick_col(
         top,
         ["uri", "track_uri", "spotify_uri", "song_uri", "id", "track_id"],
@@ -157,10 +159,11 @@ for f in csv_files:
     )
     top["uri_norm"] = top[top_uri_col].map(normalize_spotify_uri)
 
-    # Left-join lyrics so all Top-200 rows remain
+    # left-join lyrics so all Top-200 rows remain
     merged = top.merge(lyrics_master, on="uri_norm", how="left")
 
-    # Row-level coverage: fraction of rows that received lyrics
+    # result checks
+    # row-level coverage: fraction of rows that received lyrics
     row_cov = merged["lyrics"].notna().mean()
 
     # Track-level coverage: fraction of unique tracks that exist in lyrics master
@@ -185,62 +188,3 @@ for f in csv_files:
 summary_df = pd.DataFrame(summary).sort_values("track_match_rate", ascending=False)
 print(summary_df.to_string(index=False))
 print("Outputs saved to:", OUT_DIR)
-
-
-# ---------- 3) export summary (CSV + Excel), plus global metrics ----------
-num_cols = ["rows", "unique_tracks", "row_match_rate", "track_match_rate"]
-summary_df[num_cols] = summary_df[num_cols].apply(pd.to_numeric, errors="coerce")
-
-# Weighted coverage treats larger countries/files as more important
-weighted_track_coverage = (
-    (summary_df["unique_tracks"] * summary_df["track_match_rate"]).sum()
-    / summary_df["unique_tracks"].sum()
-    if summary_df["unique_tracks"].sum() > 0
-    else 0.0
-)
-
-weighted_row_coverage = (
-    (summary_df["rows"] * summary_df["row_match_rate"]).sum() / summary_df["rows"].sum()
-    if summary_df["rows"].sum() > 0
-    else 0.0
-)
-
-global_stats = pd.DataFrame(
-    {
-        "metric": [
-            "countries_processed",
-            "total_rows",
-            "total_unique_tracks",
-            "average_track_match_rate",
-            "median_track_match_rate",
-            "weighted_track_match_rate",
-            "average_row_match_rate",
-            "weighted_row_match_rate",
-        ],
-        "value": [
-            len(summary_df),
-            summary_df["rows"].sum(),
-            summary_df["unique_tracks"].sum(),
-            summary_df["track_match_rate"].mean(),
-            summary_df["track_match_rate"].median(),
-            weighted_track_coverage,
-            summary_df["row_match_rate"].mean(),
-            weighted_row_coverage,
-        ],
-    }
-)
-
-country_table = summary_df.sort_values("track_match_rate", ascending=False)
-
-csv_path = os.path.join(str(OUT_DIR), "matching_summary.csv")
-excel_path = os.path.join(str(OUT_DIR), "matching_summary.xlsx")
-
-country_table.to_csv(csv_path, index=False)
-
-with pd.ExcelWriter(excel_path) as writer:
-    country_table.to_excel(writer, sheet_name="Country_Level", index=False)
-    global_stats.to_excel(writer, sheet_name="Global_Summary", index=False)
-
-print("Saved:")
-print(" -", csv_path)
-print(" -", excel_path)

@@ -1,7 +1,11 @@
-# 02_country_regressions_with_melody_valence.py
-# Per-country SIMPLE OLS:
-# z(text_sentiment) on z(COVID) + z(MelodyValence)
+'''
+Using the cleaned dataset with sentiment, first standardize data and then
+run per-country simple OLS:
+z(text_sentiment) on z(COVID) + z(MelodyValence)
 
+Tingrui Zhang
+AI statement: AI is used to enhance robustness of this file.
+'''
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
