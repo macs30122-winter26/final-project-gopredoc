@@ -1,67 +1,114 @@
 """
-Run OLS regression of COVID search intensity on Spotify audio features
-and a time trend using the standardized USA weekly panel dataset.
+Sequential regression models for COVID search intensity.
+
+Specification expansion:
+
+(1) COVID = β0 + β1 danceability
+(2) COVID = β0 + β1 danceability + β2 energy
+(3) COVID = β0 + β1 danceability + β2 energy + β3 loudness
+...
+until all features are included.
+
+This produces a nested regression table similar to standard
+economics empirical papers.
 
 Tingrui Zhang
 AI statement: AI is used to enhance robustness of this file.
 """
 
-
 import pandas as pd
 import statsmodels.api as sm
 
-# ---- load data ----
+# -----------------------------
+# Load data
+# -----------------------------
 FILE = r"C:/Users/26540/Desktop/match_output_features/cleaned/top200_weekly_means_direct/USA_top200_weekly_means_merged_trends_STD.csv"
 df = pd.read_csv(FILE)
 
-# ---- clean column names ----
 df.columns = df.columns.str.strip()
 
+COVID = "COVID_z"
+
 FEATURES = [
-    "danceability", "energy", "loudness", "speechiness",
-    "acousticness", "instrumentalness", "liveness", "valence"
+    "danceability_z",
+    "energy_z",
+    "loudness_z",
+    "speechiness_z",
+    "acousticness_z",
+    "instrumentalness_z",
+    "liveness_z",
+    "valence_z"
 ]
 
-# use the *_z columns that already exist in the STD file
-FEATURES_Z = [f"{c}_z" for c in FEATURES]
-COVID_Z = "COVID_z"
+needed = [COVID] + FEATURES
+df = df.dropna(subset=needed)
 
-# ---- ensure needed columns exist ----
-needed = ["date", COVID_Z] + FEATURES_Z
-missing = [c for c in needed if c not in df.columns]
-if missing:
-    raise KeyError(f"Missing columns in STD file: {missing}")
+# -----------------------------
+# Run sequential regressions
+# -----------------------------
+models = []
 
-# ---- parse date + trend ----
-df["date"] = pd.to_datetime(df["date"], errors="coerce")
-df = df.dropna(subset=["date"] + [COVID_Z] + FEATURES_Z).copy()
-df = df.sort_values("date")
-df["trend"] = range(len(df))  # simple linear trend (0,1,2,...)
+# for each feature, build baseline and progessive model
+for i in range(1, len(FEATURES) + 1):
 
-results = []
+    # include i regressors in this iteration
+    regressors = FEATURES[:i]
 
-for feature, feature_z in zip(FEATURES, FEATURES_Z):
-    y = df[feature_z]  
-    X = sm.add_constant(df[[COVID_Z, "trend"]])
+    y = df[COVID]
+    X = sm.add_constant(df[regressors])
 
-    model = sm.OLS(y, X).fit()  # SIMPLE OLS (no robust SE)
+    model = sm.OLS(y, X).fit()
 
-    results.append({
-        "feature": feature,
-        "beta_COVID_std": float(model.params[COVID_Z]),
-        "se_COVID_std": float(model.bse[COVID_Z]),
-        "p_COVID": float(model.pvalues[COVID_Z]),
-        "beta_trend": float(model.params["trend"]),
-        "se_trend": float(model.bse["trend"]),
-        "p_trend": float(model.pvalues["trend"]),
-        "R_squared": float(model.rsquared),
-        "N": int(model.nobs)
-    })
+    models.append(model)
 
-results_df = pd.DataFrame(results)
+    print("\n=============================")
+    print(f"Model {i}")
+    print("Regressors:", regressors)
+    print(model.summary())
 
-OUT_FILE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\USA_COVID_feature_regressions.csv"
-results_df.to_csv(OUT_FILE, index=False)
+# -----------------------------
+# Build regression table
+# -----------------------------
+table = pd.DataFrame()
 
-print(results_df)
-print("\nSaved to:", OUT_FILE)
+variables = ["const"] + FEATURES
+
+for idx, model in enumerate(models):
+
+    col = []
+
+    for var in variables:
+
+        if var in model.params:
+
+            # document coefficients and pvalues
+            coef = model.params[var]
+            pval = model.pvalues[var]
+
+            entry = f"{coef:.3f}\n({pval:.2f})"
+
+        else:
+            entry = ""
+
+        col.append(entry)
+
+    table[f"({idx+1})"] = col
+
+# rename feature column
+table.index = ["Constant"] + [f.replace("_z","") for f in FEATURES]
+
+# add R2 row
+r2 = [f"{m.rsquared:.3f}" for m in models]
+table.loc["R2"] = r2
+
+# -----------------------------
+# Save table
+# -----------------------------
+OUT = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\USA_nested_regressions.csv"
+
+table.to_csv(OUT)
+
+print("\nRegression Table:")
+print(table)
+
+print("\nSaved to:", OUT)

@@ -1,10 +1,16 @@
 """
-Run OLS regressions of COVID search intensity on Spotify audio features and a 
-time trend using the standardized EU weekly panel dataset.
+Run pooled Europe OLS regressions of COVID search intensity on Spotify audio features
+using the standardized EU weekly panel dataset.
 
-This script performs two analyses:
-1. Country-level regressions
-2. Pooled Europe regressions
+Nested model design:
+(1) COVID = β0 + β1 danceability + ε
+(2) COVID = β0 + β1 danceability + β2 energy + ε
+(3) COVID = β0 + β1 danceability + β2 energy + β3 loudness + ε
+...
+until all features are included.
+
+This script keeps pooled Europe regressions only and exports a nested
+regression table with coefficients and p-values in parentheses.
 
 Tingrui Zhang
 AI statement: AI is used to enhance robustness of this file.
@@ -13,8 +19,9 @@ AI statement: AI is used to enhance robustness of this file.
 import pandas as pd
 import statsmodels.api as sm
 
-# ---- load standardized EU panel ----
-"""Load the EU country-week panel dataset with standardized variables."""
+# -----------------------------
+# Load standardized EU panel
+# -----------------------------
 FILE = r"C:\Users\26540\Desktop\match_output_features\cleaned\top200_weekly_means_direct\EU_top200_weekly_means_merged_trends_STD.csv"
 df = pd.read_csv(FILE)
 
@@ -22,8 +29,8 @@ df.columns = df.columns.str.strip()
 
 COUNTRY_COL = "country"
 DATE_COL = "date"
+COVID_COL = "COVID_z_within_country"
 
-# Standardized Spotify features used as explanatory variables
 FEATURES = [
     "danceability_z_within_country",
     "energy_z_within_country",
@@ -35,104 +42,82 @@ FEATURES = [
     "valence_z_within_country",
 ]
 
-# Standardized COVID search intensity
-COVID_COL = "COVID_z_within_country"
-
-# convert date column to datetime format
+# -----------------------------
+# Clean data to ensure format
+# -----------------------------
 df[DATE_COL] = pd.to_datetime(df[DATE_COL], errors="coerce")
 
-# ensure numeric
 for col in FEATURES + [COVID_COL]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 
-# Drop rows with missing values in regression variables
 df = df.dropna(subset=[COUNTRY_COL, DATE_COL, COVID_COL] + FEATURES).copy()
-
-
-# PER-COUNTRY REGRESSIONS
-
-country_results = []
-
-for country, sub in df.groupby(COUNTRY_COL, sort=False):
-    # sort by date and create weekly time trend
-    sub = sub.sort_values(DATE_COL).copy()
-    # create trend t: linear weekly time index for each country
-    sub["t"] = (sub[DATE_COL] - sub[DATE_COL].min()).dt.days / 7
-
-    # Skip countries with too few observations
-    if len(sub) < 20:
-        continue
-
-    for feature in FEATURES:
-
-        # Dependent variable
-        y = sub[COVID_COL]
-
-        # Independent variables (feature + time trend)
-        X = sm.add_constant(sub[[feature, "t"]])
-
-        # Estimate OLS model
-        model = sm.OLS(y, X).fit()
-
-        # Store regression results
-        country_results.append({
-            "country": country,
-            "feature": feature.replace("_z_within_country", ""),
-            "beta_feature_std": model.params[feature],
-            "se_feature": model.bse[feature],
-            "p_feature": model.pvalues[feature],
-            "beta_trend": model.params["t"],
-            "se_trend": model.bse["t"],
-            "p_trend": model.pvalues["t"],
-            "R_squared": model.rsquared,
-            "N": int(model.nobs)
-        })
-
-country_results_df = pd.DataFrame(country_results)
-
-OUT_COUNTRY = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_COVID_on_features_with_trend_country.csv"
-
-country_results_df.to_csv(OUT_COUNTRY, index=False)
-
-print("Saved country-level regressions to:", OUT_COUNTRY)
-
-
-
-# POOLED EUROPE REGRESSIONS
-
 df = df.sort_values(DATE_COL).copy()
 
-# Create Europe-wide time trend
-df["t_europe"] = (df[DATE_COL] - df[DATE_COL].min()).dt.days / 7
+# -----------------------------
+# Run pooled nested regressions
+# -----------------------------
+models = []
 
-europe_results = []
-
-for feature in FEATURES:
+for i in range(1, len(FEATURES) + 1):
+    regressors = FEATURES[:i]
 
     y = df[COVID_COL]
-    X = sm.add_constant(df[[feature, "t_europe"]])
+    X = sm.add_constant(df[regressors])
 
     model = sm.OLS(y, X).fit()
+    models.append(model)
 
-    europe_results.append({
-        "feature": feature.replace("_z_within_country", ""),
-        "beta_feature_std": model.params[feature],
-        "se_feature": model.bse[feature],
-        "p_feature": model.pvalues[feature],
-        "beta_trend": model.params["t_europe"],
-        "se_trend": model.bse["t_europe"],
-        "p_trend": model.pvalues["t_europe"],
-        "R_squared": model.rsquared,
-        "N": int(model.nobs)
-    })
+    print("\n=============================")
+    print(f"Model {i}")
+    print("Regressors:", regressors)
+    print(model.summary())
 
-europe_results_df = pd.DataFrame(europe_results)
+# -----------------------------
+# Build regression table
+# coefficients with p-values
+# -----------------------------
+table = pd.DataFrame()
 
-OUT_EUROPE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_COVID_on_features_with_trend_pooled.csv"
+variables = ["const"] + FEATURES
 
-europe_results_df.to_csv(OUT_EUROPE, index=False)
+for idx, model in enumerate(models):
+    col_entries = []
 
-print("Saved pooled Europe regressions to:", OUT_EUROPE)
+    for var in variables:
+        if var in model.params:
+            coef = model.params[var]
+            pval = model.pvalues[var]
+            entry = f"{coef:.3f}\n({pval:.3f})"
+        else:
+            entry = ""
+        col_entries.append(entry)
 
-print("\nPreview pooled results:")
-print(europe_results_df.head())
+    table[f"({idx+1})"] = col_entries
+
+table.index = [
+    "Constant",
+    "danceability",
+    "energy",
+    "loudness",
+    "speechiness",
+    "acousticness",
+    "instrumentalness",
+    "liveness",
+    "valence",
+]
+
+# add R2 row
+table.loc["R2"] = [f"{m.rsquared:.3f}" for m in models]
+
+# add N row
+table.loc["N"] = [int(m.nobs) for m in models]
+
+# -----------------------------
+# Save output
+# -----------------------------
+OUT_EUROPE = r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Regression_output\EU_pooled_nested_regressions.csv"
+table.to_csv(OUT_EUROPE)
+
+print("\nNested pooled Europe regression table:")
+print(table)
+print("\nSaved pooled Europe regressions to:", OUT_EUROPE)
