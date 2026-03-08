@@ -15,10 +15,10 @@ This project crawls **Spotify Daily Top 200** chart data using **Selenium** to s
 
 ## Data Coverage
 
-- **Date range**: 2024-01-01 to 2025-12-28  
+- **Date range**: 2017-01-01 to 2025-12-28  
   *(Two-year period used as an example)*
 
-- **Countries**: global, us, gb, de, fr, jp, kr, br, mx, au (10 total)  
+- **Countries**: global, us, gb, de, fr, jp, kr, br, mx, au etc. (73 countries in total)
   *(Temporarily limited to 10 major countries for demonstration)*
 
 - **Chart type**: Daily Top 200
