@@ -1,13 +1,21 @@
 """
-Spotify Charts Crawler - Monthly Crawling
-Usage: python scraper.py <country> <year> <month>
-Example: python scraper.py global 2024 1
+Author: Li You
+
+Description:
+This script crawls Spotify Daily Top 200 chart data month by month, including both
+chart rankings and selected track metadata from the Spotify Charts website.
+
+AI Disclosure:
+AI tools (e.g., ChatGPT) were used for debugging assistance, code organization,
+and documentation support. All final implementation decisions, testing, and
+verification were independently completed by the author.
+
+Usage:
+    python scraper.py <country> <year> <month>
+
+Example:
+    python scraper.py global 2024 1
 """
-#**Author**: Li You 
-#**Description**: This code collects and processes Spotify Daily Top 200 chart data, supporting automated crawling, batching, and resume-safe execution.  
-#**AI Use Disclosure**: Portions of the documentation were developed with assistance from AI tools (ChatGPT) for debugging and clarity. All final implementation decisions and verification were performed by the author.
-
-
 
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
@@ -25,7 +33,16 @@ from config import OUTPUT_DIR, ALL_REGIONS
 
 
 def get_month_dates(year, month):
-    """Get all dates in the specified month"""
+    """
+    Generate all valid dates in the specified month that are earlier than today.
+
+    Inputs:
+        year (int): Target year.
+        month (int): Target month.
+
+    Outputs:
+        list[str]: A list of date strings in 'YYYY-MM-DD' format for the specified month.
+    """
     dates = []
     days_in_month = monthrange(year, month)[1]
     today = datetime.now()
@@ -38,7 +55,18 @@ def get_month_dates(year, month):
 
 
 def load_progress(country, year, month):
-    """Load crawling progress"""
+    """
+    Load previously saved crawling progress for a given country-month task.
+
+    Inputs:
+        country (str): Region code being crawled.
+        year (int): Target year.
+        month (int): Target month.
+
+    Outputs:
+        dict: A progress dictionary containing completed dates. If no progress file
+        exists, returns a default dictionary with an empty completed list.
+    """
     progress_file = os.path.join(
         OUTPUT_DIR, f'progress_{country}_{year}_{month:02d}.json'
     )
@@ -49,7 +77,18 @@ def load_progress(country, year, month):
 
 
 def save_progress(country, year, month, progress):
-    """Save crawling progress"""
+    """
+    Save crawling progress to a JSON file for resume-safe execution.
+
+    Inputs:
+        country (str): Region code being crawled.
+        year (int): Target year.
+        month (int): Target month.
+        progress (dict): Progress dictionary to save.
+
+    Outputs:
+        None
+    """
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     progress_file = os.path.join(
         OUTPUT_DIR, f'progress_{country}_{year}_{month:02d}.json'
@@ -59,14 +98,27 @@ def save_progress(country, year, month, progress):
 
 
 def scrape_page(driver, country, date):
-    """Scrape a single chart page"""
+    """
+    Scrape chart entries from a single Spotify Charts page for one country-date pair.
+
+    Inputs:
+        driver: Selenium WebDriver instance.
+        country (str): Region code being crawled.
+        date (str): Target date in 'YYYY-MM-DD' format.
+
+    Outputs:
+        list[dict]: A list of parsed chart entries for the specified page.
+        Returns an empty list if scraping fails after retries.
+    """
     url = f'https://charts.spotify.com/charts/view/regional-{country}-daily/{date}'
 
+    # Retry page loading a few times in case of transient failures
     for attempt in range(3):
         try:
             driver.get(url)
             time.sleep(3)
 
+            # Wait until chart rows are visible in the table
             WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'tbody tr'))
             )
@@ -76,6 +128,7 @@ def scrape_page(driver, country, date):
             rows = driver.find_elements(By.CSS_SELECTOR, 'tbody tr')
             row_count = len(rows)
 
+            # Parse each row one by one
             for i in range(row_count):
                 for retry in range(3):
                     try:
@@ -106,7 +159,19 @@ def scrape_page(driver, country, date):
 
 
 def parse_row_with_detail(driver, row, country, date):
-    """Parse a single row and fetch detailed metadata"""
+    """
+    Parse one chart row and extract both basic fields and expandable detail metadata.
+
+    Inputs:
+        driver: Selenium WebDriver instance.
+        row: Selenium WebElement corresponding to one chart table row.
+        country (str): Region code being crawled.
+        date (str): Target date in 'YYYY-MM-DD' format.
+
+    Outputs:
+        dict or None: A dictionary containing parsed fields for the row if successful;
+        otherwise returns None.
+    """
     entry = {
         'rank': '', 'uri': '', 'artist_names': '', 'track_name': '',
         'source': '', 'peak_rank': '', 'previous_rank': '', 'weeks_on_chart': '',
@@ -119,6 +184,7 @@ def parse_row_with_detail(driver, row, country, date):
         if len(cells) < 7:
             return None
 
+        # Extract rank from the ranking cell
         rank_text = cells[1].text.strip().split('\n')[0]
         rank_match = re.search(r'^(\d+)', rank_text)
         if rank_match:
@@ -126,6 +192,7 @@ def parse_row_with_detail(driver, row, country, date):
         else:
             return None
 
+        # Extract track URI, track name, and artist names from hyperlinks
         track_cell = cells[2]
         links = track_cell.find_elements(By.TAG_NAME, 'a')
 
@@ -146,7 +213,7 @@ def parse_row_with_detail(driver, row, country, date):
         entry['weeks_on_chart'] = cells[5].text.strip()
         entry['streams'] = cells[6].text.strip().replace(',', '')
 
-        # Click "More" button to fetch details
+        # Click the expandable "More" button to retrieve additional metadata
         try:
             driver.execute_script(
                 "arguments[0].scrollIntoView({block: 'center'});", row
@@ -165,9 +232,11 @@ def parse_row_with_detail(driver, row, country, date):
                     detail_text = text
                     break
 
+            # Fallback: use the full table body text if a targeted detail block is not found
             if not detail_text:
                 detail_text = driver.find_element(By.CSS_SELECTOR, 'tbody').text
 
+            # Extract selected detail fields using regular expressions
             m = re.search(
                 r'Release Date\s*\n?\s*([A-Za-z]+\s+\d{1,2},?\s+\d{4})',
                 detail_text
@@ -207,6 +276,7 @@ def parse_row_with_detail(driver, row, country, date):
                     r'\s*\n\s*', ', ', m.group(1).strip()
                 ).strip(', ')
 
+            # Try to close the detail view after extraction
             try:
                 more_btn = row.find_element(By.CSS_SELECTOR, 'button.view-more-button')
                 driver.execute_script("arguments[0].click();", more_btn)
@@ -224,7 +294,18 @@ def parse_row_with_detail(driver, row, country, date):
 
 
 def save_data(country, year, month, data):
-    """Save data to CSV"""
+    """
+    Save scraped chart data to a monthly CSV file.
+
+    Inputs:
+        country (str): Region code being crawled.
+        year (int): Target year.
+        month (int): Target month.
+        data (list[dict]): Parsed chart entries to write.
+
+    Outputs:
+        None
+    """
     if not data:
         return
 
@@ -240,6 +321,7 @@ def save_data(country, year, month, data):
         'date', 'country'
     ]
 
+    # Append to an existing file if present; otherwise write a new file with header
     file_exists = os.path.exists(filename)
     with open(filename, 'a', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -249,6 +331,16 @@ def save_data(country, year, month, data):
 
 
 def main():
+    """
+    Run the monthly Spotify Charts crawling workflow from command-line arguments.
+
+    Inputs:
+        None directly. The function reads command-line arguments in the form:
+        python scraper.py <country> <year> <month>
+
+    Outputs:
+        None
+    """
     if len(sys.argv) != 4:
         print("Usage: python scraper.py <country> <year> <month>")
         print("Example: python scraper.py global 2024 1")
@@ -259,6 +351,7 @@ def main():
     year = int(sys.argv[2])
     month = int(sys.argv[3])
 
+    # Validate the region code before launching the crawler
     if country not in ALL_REGIONS:
         print(f"Error: unknown region '{country}'")
         print(f"Available: global, {', '.join(ALL_REGIONS[1:20])}...")
@@ -271,6 +364,7 @@ def main():
         print("No dates available for crawling")
         return
 
+    # Load progress so the script can resume incomplete monthly tasks
     progress = load_progress(country, year, month)
     completed = set(progress['completed'])
     pending = [d for d in dates if d not in completed]
@@ -302,6 +396,7 @@ def main():
         )
         time.sleep(5)
 
+        # Reuse the browser profile if already logged in; otherwise wait for manual login
         try:
             driver.find_element(By.CSS_SELECTOR, 'tbody tr')
             print("Already logged in. Starting crawl...")
@@ -312,6 +407,7 @@ def main():
         data = []
         start_time = time.time()
 
+        # Process each pending date and periodically save intermediate results
         for i, date in enumerate(pending):
             print(f"\r[{i + 1}/{len(pending)}] {date}", end="", flush=True)
 
@@ -330,6 +426,7 @@ def main():
                 print(f" | ~{remaining / 60:.0f} minutes remaining")
                 data = []
 
+        # Save any final unsaved results after the loop ends
         if data:
             save_data(country, year, month, data)
             save_progress(country, year, month, progress)
