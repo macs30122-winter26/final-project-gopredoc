@@ -70,6 +70,7 @@ final-project-gopredoc/
 │   │   └── google_trends_us_weekly.csv
 │   ├── Dropbox_link_spotify.docx
 │   └── top200_lyric_features_link.txt
+│   └── Spotify_features_link.txt
 │
 ├── EDAViz_result/
 │   └── EDA_Viz/
