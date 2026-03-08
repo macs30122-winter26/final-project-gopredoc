@@ -1,0 +1,20 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,covid_trend     ,  R-squared:         ,   0.000
+Model:           ,OLS             ,  Adj. R-squared:    ,  -0.001
+Method:          ,Least Squares   ,  F-statistic:       , 0.03606
+Date:            ,Sun, 08 Mar 2026,  Prob (F-statistic):, 0.849  
+Time:            ,11:26:55        ,  Log-Likelihood:    , -4881.8
+No. Observations:,  1119          ,  AIC:               ,   9768.
+Df Residuals:    ,  1117          ,  BIC:               ,   9778.
+Df Model:        ,     1          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+            ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const       ,   16.8469,    0.787,   21.415, 0.000,   15.303,   18.390
+acousticness,   -0.3934,    2.072,   -0.190, 0.849,   -4.459,    3.672
+Omnibus:      ,307.507,  Durbin-Watson:     ,   0.061 
+Prob(Omnibus):, 0.000 ,  Jarque-Bera (JB):  , 660.842 
+Skew:         , 1.553 ,  Prob(JB):          ,3.16e-144
+Kurtosis:     , 5.126 ,  Cond. No.          ,    3.92 
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
