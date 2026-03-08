@@ -1,47 +1,36 @@
-# Project Title
+# Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends
 
-Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends
+## 📖 Project Description
 
----
-
-# Project Description
-
-## Summary
-
+### Summary
 This project investigates how collective emotional expression reflected in popular music responded to the COVID-19 pandemic. Specifically, we examine whether changes in public attention to COVID-19, measured through Google search intensity, are associated with shifts in musical characteristics and lyrical sentiment in chart-topping songs.
 
-- **Topic**  
-  The relationship between music sentiment, music attributes, and public attention to COVID-19 during the pandemic.
-
-- **Research Question(s)**  
-  1. How does the lyrical sentiment of trending music respond to increases in COVID-19 related search intensity?  
-  2. Do music attributes and lyrical sentiment respond differently in the United States compared to Europe?  
+* **Topic:** The relationship between music sentiment, music attributes, and public attention to COVID-19 during the pandemic.
+* **Research Question(s):**
+  1. How does the lyrical sentiment of trending music respond to increases in COVID-19 related search intensity?
+  2. Do music attributes and lyrical sentiment respond differently in the United States compared to Europe?
   3. Are changes in public attention to COVID-19 associated with measurable shifts in audio features such as acousticness, danceability, and energy?
 
 ---
 
-# Data
+## 📊 Data
 
 | Data Source | Link | Collection Method | Notes |
 |---|---|---|---|
-| Spotify Top Songs Charts | [Spotify Charts](https://charts.spotify.com/) | Web scraping | Daily chart data for the United States and European countries |
-| Lyrics Database (AZLyrics) | [AZLyrics](https://www.azlyrics.com/) | Web scraping | Primary source for song lyrics |
-| Musixmatch Lyrics API | [Musixmatch API](https://docs.musixmatch.com/lyrics-api/) | API | Used as a fallback to fill missing lyrics |
-| Spotify Music Attributes Dataset | [Anna's Archive](https://annas-archive.pm/blog/backing-up-spotify.html) | Download | Provides audio features such as acousticness, danceability, energy |
-| Google Trends | [Google Trends](https://trends.google.com/trends/) | API | COVID-related search intensity collected via `pytrends` |
+| **Spotify Top Songs Charts** | [Spotify Charts](https://charts.spotify.com/) | Web scraping | Daily chart data for the US and European countries |
+| **Lyrics Database (AZLyrics)** | [AZLyrics](https://www.azlyrics.com/) | Web scraping | Primary source for song lyrics |
+| **Musixmatch Lyrics API** | [Musixmatch API](https://docs.musixmatch.com/lyrics-api/) | API | Used as a fallback to fill missing lyrics |
+| **Spotify Music Attributes** | [Anna's Archive](https://annas-archive.pm/blog/backing-up-spotify.html) | Download | Provides audio features (acousticness, danceability, etc.) |
+| **Google Trends** | [Google Trends](https://trends.google.com/trends/) | API | COVID-related search intensity collected via `pytrends` |
+
+> **Additional Notes on Data Collection:**
+> * Some songs did not have available lyrics in AZLyrics.
+> * Musixmatch API was used to fill missing lyrics where possible.
+> * API rate limits required a fallback scraping strategy.
 
 ---
 
-
-
-Additional notes:
-
-- Some songs did not have available lyrics in AZLyrics.
-- Musixmatch API was used to fill missing lyrics where possible.
-- API rate limits required a fallback scraping strategy.
-
----
-# Repository Structure
+## 🗂️ Repository Structure
 
 ```text
 music-sentiment-covid/
@@ -54,11 +43,9 @@ music-sentiment-covid/
 ├── Codes/
 │   ├── Google_Trend/
 │   │   └── google_trends_scraper.py
-│   │
 │   ├── Lyrics_Scraping/
 │   │   ├── azlyrics_scraper.py
 │   │   └── musixmatch_api_fallback.py
-│   │
 │   └── Spotify_Scraping/
 │       └── spotify_chart_scraper.py
 │
