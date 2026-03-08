@@ -61,4 +61,4 @@ for country, code in EU_COUNTRIES.items():
 
 # stack all df
 eu_covid = pd.concat(all_data, ignore_index=True)
-eu_covid.to_csv("covid_trends_europe.csv", index=False)
+eu_covid.to_csv(r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Data\Google Trends\covid_trends_europe.csv", index=False)
