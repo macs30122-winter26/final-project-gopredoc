@@ -35,40 +35,68 @@ This project explores how public music consumption shifted during the COVID-19 p
 
 ## 🗂️ Repository Structure
 
+
 ```text
-music-sentiment-covid/
-│
-├── Data/
-│   ├── lyrics_downloaded.zip
-│   ├── spotify_daily_links.docx
-│   └── processed_data/
+final-project-gopredoc/
 │
 ├── Codes/
-│   ├── Google_Trend/
-│   │   └── google_trends_scraper.py
-│   ├── Lyrics_Scraping/
-│   │   ├── azlyrics_scraper.py
-│   │   └── musixmatch_api_fallback.py
-│   └── Spotify_Scraping/
-│       └── spotify_chart_scraper.py
+│   ├── Cleansing/
+│   │   └── data_cleansing_EDATextAnalysis.ipynb
+│   ├── EDA/
+│   │   └── EDA.ipynb
+│   ├── Regression/
+│   │   ├── Step1_Top200-Lyric Matching/
+│   │   ├── Step2_Data_processing_for_reg/
+│   │   ├── Step3_Regression/
+│   │   └── Step4_Robustness_check/
+│   ├── Scraping/
+│   │   ├── Google Trends/
+│   │   │   ├── scrape_search_density_EU.py
+│   │   │   └── scrape_search_density_US.py
+│   │   ├── Lyrics Scraping/
+│   │   │   ├── Lyric_Downloader_for sharing.ipynb
+│   │   │   └── musixmatch_fill_lyrics.ipynb
+│   │   └── Spotify Scraping/
+│   │       ├── README.md
+│   │       ├── config.py
+│   │       ├── run_batch.py
+│   │       └── scraper.py
+│   └── Textual Analysis/
+│       └── lyrics_textanalysis.ipynb
 │
-├── Cleansing/
-│   ├── data_cleaning.ipynb
-│   └── merge_datasets.ipynb
+├── Data/
+│   ├── Google Trends/
+│   │   ├── covid_trends_europe.csv
+│   │   └── google_trends_us_weekly.csv
+│   ├── Dropbox_link_spotify.docx
+│   └── top200_lyric_features_link.txt
 │
-├── EDA/
-│   └── exploratory_analysis.ipynb
+├── EDAViz_result/
+│   └── EDA_Viz/
+│       ├── All_Countries/
+│       ├── Europe/
+│       ├── USA/
+│       └── descriptive_stats/
 │
-├── Textual Analysis/
-│   ├── lyrics_textual_analysis.ipynb
-│   └── musixmatch_fill_lyrics.ipynb
+├── Regression_output/
+│   ├── COVID_robustness_features.png
+│   ├── COVID_robustness_features_sentiment.png
+│   ├── EU_COVID_on_features_with_trend_country.csv
+│   ├── EU_COVID_on_features_with_trend_pooled.csv
+│   ├── EU_feature_regressions_with_trend.csv
+│   ├── EU_pooled_feature_regressions_with_trend.csv
+│   ├── EU_pooled_nested_regressions.csv
+│   ├── EU_sentiment_progressive.csv
+│   ├── USA_COVID_feature_regressions.csv
+│   ├── USA_feature_regressions_with_trend.csv
+│   ├── USA_nested_regressions.csv
+│   ├── USA_sentiment_progressive.csv
+│   ├── sentiment_regression_results_with_melody_valence.csv
+│   └── sentiment_regression_results_with_trend.csv
 │
-├── Visualization/
-│   └── figures_and_plots.ipynb
-│
-├── docs/
-│   └── ProgressReport-check2.pdf
-│
+├── GoPredoc_final.pptx
+├── GoPredoc_original.pptx
+├── ProgressReport-check2.pdf
 └── README.md
 ```
 ### 📂 Folder Explanation
