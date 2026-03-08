@@ -18,7 +18,7 @@ This project explores how public music consumption shifted during the COVID-19 p
 
 | Data Source | Link | Collection Method | Notes |
 |---|---|---|---|
-| **Spotify Top Songs Charts** | [Spotify Charts]([https://charts.spotify.com/](https://charts.spotify.com/charts/view/regional-us-daily/2026-02-26)) | Web scraping | Daily chart data for the US and European countries |
+| **Spotify Top Songs Charts** | [Spotify Charts](https://charts.spotify.com/](https://charts.spotify.com/charts/view/regional-us-daily/2026-02-26)) | Web scraping | Daily chart data for the US and European countries |
 | **Lyrics Database (AZLyrics)** | [AZLyrics](https://www.azlyrics.com/) | Web scraping | Primary source for song lyrics |
 | **Musixmatch Lyrics API** | [Musixmatch API](https://docs.musixmatch.com/lyrics-api/) | API | Used as a fallback to fill missing lyrics |
 | **Spotify Music Attributes** | [Anna's Archive](https://annas-archive.pm/blog/backing-up-spotify.html) | Download | Provides audio features (acousticness, danceability, etc.) |
