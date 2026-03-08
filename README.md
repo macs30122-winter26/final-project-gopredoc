@@ -138,8 +138,9 @@ final-project-gopredoc/
   * Implemented Spotify chart scraping scripts.
   * Implemented lyrics scraping from AZLyrics.
   * Designed fallback strategy using Musixmatch API for missing lyrics.
-  * Cleaned and merged sentiment datasets.
-  * Updated repository structure and documentation.
+  * Cleaned and merged musical attributes datasets.
+  * Managed the GitHub repository and maintained the README documentation.
+
 
 * **Tingrui Zhang**
   * Implemented Google Trends API data collection scripts.
@@ -168,6 +169,8 @@ The following AI tools were used during the project:
 
 ## 🔗 Project Links
 
-* **Slides used in the in-class presentation:** Included in the repository.
-* **Updated final slides (full version):** Included in the repository.
+## 🔗 Project Links
+
+* **Slides used in the in-class presentation:** [GoPredoc_original.pptx](https://github.com/macs30122-winter26/final-project-gopredoc/blob/ff2bae2b0f97eec0aa7f336bec5ad011412895ee/GoPredoc_original.pptx)
+* **Updated final slides (full version):** [GoPredoc_final.pptx](https://github.com/macs30122-winter26/final-project-gopredoc/blob/ff2bae2b0f97eec0aa7f336bec5ad011412895ee/GoPredoc_final.pptx)
 * **Presentation video:** Link provided in the repository.
