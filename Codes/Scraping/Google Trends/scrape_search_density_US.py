@@ -36,7 +36,7 @@ weekly = weekly.drop(columns=["isPartial"], errors="ignore")
 # Make sure date is a column
 weekly = weekly.reset_index()  
 
-weekly.to_csv("google_trends_us_weekly.csv", index=False)
+weekly.to_csv(r"C:\Users\26540\OneDrive\Study\UChicago\Winter\MACS 30122\final-project-gopredoc\Data\Google Trends\google_trends_US_weekly.csv", index=False)
 print("Saved:", "google_trends_us_weekly.csv")
 print(weekly.head())
 
