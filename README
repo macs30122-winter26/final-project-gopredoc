@@ -21,7 +21,6 @@
 
 ---
 
-
 # Project Description
 
 ## Summary
@@ -45,7 +44,7 @@ This project combines **web-scraped Spotify chart data, lyrics collected from on
 
 **Total lines of code**: ~4,500 lines of Python code across scraping scripts, data cleaning scripts, and analysis notebooks.
 
-**Methods and Analysis**
+### Methods and Analysis
 
 - Web scraping and API-based data collection  
 - Textual sentiment analysis of song lyrics using NLP tools  
@@ -53,8 +52,10 @@ This project combines **web-scraped Spotify chart data, lyrics collected from on
 - Multiple OLS regression models comparing US and European datasets  
 - Multicollinearity diagnostics using Variance Inflation Factor (VIF)
 
-**Project strength**  
-**Data collection and integration.** The project integrates multiple heterogeneous datasets (Spotify charts, lyrics databases, and Google Trends) and constructs a full pipeline for scraping, cleaning, merging, and analyzing the data.
+### Project strength
+
+**Data collection and integration.**  
+The project integrates multiple heterogeneous datasets (Spotify charts, lyrics databases, and Google Trends) and constructs a full pipeline for scraping, cleaning, merging, and analyzing the data.
 
 ---
 
@@ -68,13 +69,15 @@ This project combines **web-scraped Spotify chart data, lyrics collected from on
 | Spotify Music Attributes Dataset | https://annas-archive.pm/blog/backing-up-spotify.html | Download | Provides audio features such as acousticness, danceability, energy |
 | Google Trends | https://trends.google.com/trends/ | API | COVID-related search intensity collected via `pytrends` |
 
-Notes:
+### Notes
 
 - Some songs did not have available lyrics in AZLyrics.  
 - Musixmatch API was used to fill missing lyrics where possible.  
 - API rate limits required a fallback scraping strategy.
 
 ---
+
+
 
 # Repository Structure
 music-sentiment-covid/
