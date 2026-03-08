@@ -3,13 +3,14 @@
 ## 📖 Project Description
 
 ### Summary
-This project investigates how collective emotional expression reflected in popular music responded to the COVID-19 pandemic. Specifically, we examine whether changes in public attention to COVID-19, measured through Google search intensity, are associated with shifts in musical characteristics and lyrical sentiment in chart-topping songs.
+This project explores how public music consumption shifted during the COVID-19 pandemic, acting as a mirror for collective emotional stress. We analyze both the audio features (e.g., acousticness, danceability) and lyrical sentiment (via NLP) of chart-topping songs against COVID-19 search trends.
 
 * **Topic:** The relationship between music sentiment, music attributes, and public attention to COVID-19 during the pandemic.
+  
 * **Research Question(s):**
-  1. How does the lyrical sentiment of trending music respond to increases in COVID-19 related search intensity?
-  2. Do music attributes and lyrical sentiment respond differently in the United States compared to Europe?
-  3. Are changes in public attention to COVID-19 associated with measurable shifts in audio features such as acousticness, danceability, and energy?
+   How does the correlation between music attributes (melody and lyrics) and COVID-19 pandemic trends differ between the US and European markets?
+
+
 
 ---
 
@@ -17,7 +18,7 @@ This project investigates how collective emotional expression reflected in popul
 
 | Data Source | Link | Collection Method | Notes |
 |---|---|---|---|
-| **Spotify Top Songs Charts** | [Spotify Charts](https://charts.spotify.com/) | Web scraping | Daily chart data for the US and European countries |
+| **Spotify Top Songs Charts** | [Spotify Charts]([https://charts.spotify.com/](https://charts.spotify.com/charts/view/regional-us-daily/2026-02-26)) | Web scraping | Daily chart data for the US and European countries |
 | **Lyrics Database (AZLyrics)** | [AZLyrics](https://www.azlyrics.com/) | Web scraping | Primary source for song lyrics |
 | **Musixmatch Lyrics API** | [Musixmatch API](https://docs.musixmatch.com/lyrics-api/) | API | Used as a fallback to fill missing lyrics |
 | **Spotify Music Attributes** | [Anna's Archive](https://annas-archive.pm/blog/backing-up-spotify.html) | Download | Provides audio features (acousticness, danceability, etc.) |
