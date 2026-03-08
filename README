@@ -57,42 +57,43 @@ Additional notes:
 - API rate limits required a fallback scraping strategy.
 
 ---
-
 # Repository Structure
+
+```text
 music-sentiment-covid/
 │
 ├── Data/
-│ ├── lyrics_downloaded.zip
-│ ├── spotify_daily_links.docx
-│ └── processed_data/
+│   ├── lyrics_downloaded.zip
+│   ├── spotify_daily_links.docx
+│   └── processed_data/
 │
 ├── Codes/
-│ ├── Google_Trend/
-│ │ └── google_trends_scraper.py
-│ │
-│ ├── Lyrics_Scraping/
-│ │ ├── azlyrics_scraper.py
-│ │ └── musixmatch_api_fallback.py
-│ │
-│ └── Spotify_Scraping/
-│ └── spotify_chart_scraper.py
+│   ├── Google_Trend/
+│   │   └── google_trends_scraper.py
+│   │
+│   ├── Lyrics_Scraping/
+│   │   ├── azlyrics_scraper.py
+│   │   └── musixmatch_api_fallback.py
+│   │
+│   └── Spotify_Scraping/
+│       └── spotify_chart_scraper.py
 │
 ├── Cleansing/
-│ ├── data_cleaning.ipynb
-│ └── merge_datasets.ipynb
+│   ├── data_cleaning.ipynb
+│   └── merge_datasets.ipynb
 │
 ├── EDA/
-│ └── exploratory_analysis.ipynb
+│   └── exploratory_analysis.ipynb
 │
 ├── Textual Analysis/
-│ ├── lyrics_textual_analysis.ipynb
-│ └── musixmatch_fill_lyrics.ipynb
+│   ├── lyrics_textual_analysis.ipynb
+│   └── musixmatch_fill_lyrics.ipynb
 │
 ├── Visualization/
-│ └── figures_and_plots.ipynb
+│   └── figures_and_plots.ipynb
 │
 ├── docs/
-│ └── ProgressReport-check2.pdf
+│   └── ProgressReport-check2.pdf
 │
 └── README.md
 
