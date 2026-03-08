@@ -1,4 +1,4 @@
-# Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends
+# Soundtracks of a Crisis: Cross-Regional Divergence in Musical Coping Mechanisms During COVID-19
 
 ## 📖 Project Description
 
