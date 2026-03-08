@@ -114,6 +114,18 @@ music-sentiment-covid/
 
 ---
 
+
+## Folder Explanation
+
+- **Data/** – raw and processed datasets used in the project  
+- **Codes/** – scripts used for scraping Spotify charts, lyrics data, and Google Trends data  
+- **Cleansing/** – scripts and notebooks used for data cleaning and dataset merging  
+- **EDA/** – exploratory data analysis notebooks  
+- **Textual Analysis/** – NLP analysis of lyrics sentiment  
+- **Visualization/** – figures and visualizations used in analysis and presentation  
+- **docs/** – project documentation and progress reports
+
+
 # Contributions
 
 **Li You**
