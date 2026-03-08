@@ -70,6 +70,7 @@ music-sentiment-covid/
 │   └── ProgressReport-check2.pdf
 │
 └── README.md
+```
 ### 📂 Folder Explanation
 
 * **`Data/`** – Raw and processed datasets used in the project.
