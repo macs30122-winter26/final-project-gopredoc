@@ -2,7 +2,25 @@
 
 **Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends**
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![NLP](https://img.shields.io/badge/NLP-Transformers-green)
+![Data](https://img.shields.io/badge/Data-Spotify-orange)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
 ---
+
+## Table of Contents
+
+- [Project Description](#project-description)
+- [Data](#data)
+- [Repository Structure](#repository-structure)
+- [Libraries](#libraries)
+- [Contributions](#contributions)
+- [AI Usage Statement](#ai-usage-statement)
+- [Project Links](#project-links)
+
+---
+
 
 # Project Description
 
