@@ -1,19 +1,6 @@
-# 🎵 Project Title
+# Project Title
 
-Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends**
-======
-
----
-
-## Table of Contents
-
-- [Project Description](#project-description)
-- [Data](#data)
-- [Repository Structure](#repository-structure)
-- [Libraries](#libraries)
-- [Contributions](#contributions)
-- [AI Usage Statement](#ai-usage-statement)
-- [Project Links](#project-links)
+Music Sentiment Responses to COVID-19 Information Shocks: Evidence from Spotify Charts and Google Search Trends
 
 ---
 
@@ -32,23 +19,21 @@ This project investigates how collective emotional expression reflected in popul
   3. Are changes in public attention to COVID-19 associated with measurable shifts in audio features such as acousticness, danceability, and energy?
 
 - **Why the question matters**  
-  Music consumption often reflects collective emotions and social behavior. During large-scale crises such as the COVID-19 pandemic, changes in music sentiment may reveal how societies cope with uncertainty and stress. Understanding these patterns can help provide insights into cultural coping mechanisms and collective emotional responses across different regions.
+  Music consumption often reflects collective emotions and social behavior. During large-scale crises such as the COVID-19 pandemic, changes in music sentiment may reveal how societies cope with uncertainty and stress. Understanding these patterns can provide insights into cultural coping mechanisms and collective emotional responses across different regions.
 
 This project combines **web-scraped Spotify chart data, lyrics collected from online databases, and Google Trends search data**. Using textual sentiment analysis and regression analysis, we explore whether collective emotional expression in music systematically changes during periods of heightened public concern about COVID-19.
+
+---
 
 ## Additional info
 
 **Total lines of code**: ~4,500 lines of Python code across scraping scripts, data cleaning scripts, and analysis notebooks.
 
-### Methods and Analysis
+**Methods and Analysis**
 
-- Web scraping and API-based data collection  
-- Textual sentiment analysis of song lyrics using NLP tools  
-- Exploratory Data Analysis (EDA) and visualization  
-- Multiple OLS regression models comparing US and European datasets  
-- Multicollinearity diagnostics using Variance Inflation Factor (VIF)
+The project uses web scraping and APIs to collect Spotify charts, lyrics data, and Google Trends search intensity. Lyrics are processed using natural language processing tools to compute sentiment scores, and exploratory data analysis and OLS regression models are used to analyze relationships between COVID-19 search intensity, lyrical sentiment, and music attributes.
 
-### Project strength
+**Project strength**
 
 **Data collection and integration.**  
 The project integrates multiple heterogeneous datasets (Spotify charts, lyrics databases, and Google Trends) and constructs a full pipeline for scraping, cleaning, merging, and analyzing the data.
@@ -65,15 +50,13 @@ The project integrates multiple heterogeneous datasets (Spotify charts, lyrics d
 | Spotify Music Attributes Dataset | https://annas-archive.pm/blog/backing-up-spotify.html | Download | Provides audio features such as acousticness, danceability, energy |
 | Google Trends | https://trends.google.com/trends/ | API | COVID-related search intensity collected via `pytrends` |
 
-### Notes
+Additional notes:
 
-- Some songs did not have available lyrics in AZLyrics.  
-- Musixmatch API was used to fill missing lyrics where possible.  
+- Some songs did not have available lyrics in AZLyrics.
+- Musixmatch API was used to fill missing lyrics where possible.
 - API rate limits required a fallback scraping strategy.
 
 ---
-
-
 
 # Repository Structure
 music-sentiment-covid/
@@ -112,6 +95,19 @@ music-sentiment-covid/
 │ └── ProgressReport-check2.pdf
 │
 └── README.md
+
+**Folder explanation**
+
+- `Data/` – raw and processed datasets used in the project  
+- `Codes/` – scripts used for scraping Spotify charts, lyrics data, and Google Trends data  
+- `Cleansing/` – notebooks used for cleaning and merging datasets  
+- `EDA/` – exploratory data analysis notebooks  
+- `Textual Analysis/` – natural language processing and sentiment analysis of lyrics  
+- `Visualization/` – figures and visualizations used in analysis and presentations  
+- `docs/` – project documentation and progress reports  
+
+---
+
 # Libraries
 
 | Library | Version |
@@ -131,46 +127,34 @@ music-sentiment-covid/
 
 ---
 
-
-## Folder Explanation
-
-- **Data/** – raw and processed datasets used in the project  
-- **Codes/** – scripts used for scraping Spotify charts, lyrics data, and Google Trends data  
-- **Cleansing/** – scripts and notebooks used for data cleaning and dataset merging  
-- **EDA/** – exploratory data analysis notebooks  
-- **Textual Analysis/** – NLP analysis of lyrics sentiment  
-- **Visualization/** – figures and visualizations used in analysis and presentation  
-- **docs/** – project documentation and progress reports
-
-
 # Contributions
 
 **Li You**
 
-- Implemented Spotify chart scraping scripts  
-- Implemented lyrics scraping from AZLyrics  
-- Designed fallback strategy using Musixmatch API for missing lyrics  
-- Cleaned and merged sentiment datasets  
-- Updated repository structure and documentation  
+- Implemented Spotify chart scraping scripts
+- Implemented lyrics scraping from AZLyrics
+- Designed fallback strategy using Musixmatch API for missing lyrics
+- Cleaned and merged sentiment datasets
+- Updated repository structure and documentation
 
 **Tingrui Zhang**
 
-- Implemented Google Trends API data collection scripts  
-- Processed COVID search frequency dataset  
-- Conducted regression analysis comparing US and EU datasets  
+- Implemented Google Trends API data collection scripts
+- Processed COVID search frequency dataset
+- Conducted regression analysis comparing US and EU datasets
 
 **Yangshunshun (Luna) Lu**
 
-- Built repository structure  
-- Conducted exploratory data analysis (EDA)  
-- Performed lyrics textual analysis  
-- Created visualizations and figures for presentation  
+- Built repository structure
+- Conducted exploratory data analysis (EDA)
+- Performed lyrics textual analysis
+- Created visualizations and figures for presentation
 
 ---
 
 # AI Usage Statement
 
-The following AI tools were used during the project:
+The following AI tools were used during the project.
 
 **ChatGPT**
 
