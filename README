@@ -18,37 +18,21 @@ This project investigates how collective emotional expression reflected in popul
   2. Do music attributes and lyrical sentiment respond differently in the United States compared to Europe?  
   3. Are changes in public attention to COVID-19 associated with measurable shifts in audio features such as acousticness, danceability, and energy?
 
-- **Why the question matters**  
-  Music consumption often reflects collective emotions and social behavior. During large-scale crises such as the COVID-19 pandemic, changes in music sentiment may reveal how societies cope with uncertainty and stress. Understanding these patterns can provide insights into cultural coping mechanisms and collective emotional responses across different regions.
-
-This project combines **web-scraped Spotify chart data, lyrics collected from online databases, and Google Trends search data**. Using textual sentiment analysis and regression analysis, we explore whether collective emotional expression in music systematically changes during periods of heightened public concern about COVID-19.
-
----
-
-## Additional info
-
-**Total lines of code**: ~4,500 lines of Python code across scraping scripts, data cleaning scripts, and analysis notebooks.
-
-**Methods and Analysis**
-
-The project uses web scraping and APIs to collect Spotify charts, lyrics data, and Google Trends search intensity. Lyrics are processed using natural language processing tools to compute sentiment scores, and exploratory data analysis and OLS regression models are used to analyze relationships between COVID-19 search intensity, lyrical sentiment, and music attributes.
-
-**Project strength**
-
-**Data collection and integration.**  
-The project integrates multiple heterogeneous datasets (Spotify charts, lyrics databases, and Google Trends) and constructs a full pipeline for scraping, cleaning, merging, and analyzing the data.
-
 ---
 
 # Data
 
 | Data Source | Link | Collection Method | Notes |
 |---|---|---|---|
-| Spotify Top Songs Charts | https://charts.spotify.com/ | Web scraping | Daily chart data for the United States and European countries |
-| Lyrics Database (AZLyrics) | https://www.azlyrics.com/ | Web scraping | Primary source for song lyrics |
-| Musixmatch Lyrics API | https://docs.musixmatch.com/lyrics-api/ | API | Used as a fallback to fill missing lyrics |
-| Spotify Music Attributes Dataset | https://annas-archive.pm/blog/backing-up-spotify.html | Download | Provides audio features such as acousticness, danceability, energy |
-| Google Trends | https://trends.google.com/trends/ | API | COVID-related search intensity collected via `pytrends` |
+| Spotify Top Songs Charts | [Spotify Charts](https://charts.spotify.com/) | Web scraping | Daily chart data for the United States and European countries |
+| Lyrics Database (AZLyrics) | [AZLyrics](https://www.azlyrics.com/) | Web scraping | Primary source for song lyrics |
+| Musixmatch Lyrics API | [Musixmatch API](https://docs.musixmatch.com/lyrics-api/) | API | Used as a fallback to fill missing lyrics |
+| Spotify Music Attributes Dataset | [Anna's Archive](https://annas-archive.pm/blog/backing-up-spotify.html) | Download | Provides audio features such as acousticness, danceability, energy |
+| Google Trends | [Google Trends](https://trends.google.com/trends/) | API | COVID-related search intensity collected via `pytrends` |
+
+---
+
+
 
 Additional notes:
 
