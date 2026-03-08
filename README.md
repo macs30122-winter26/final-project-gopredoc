@@ -3,11 +3,13 @@
 ## 📖 Project Description
 
 ### Summary
-This project explores how public music consumption shifted during the COVID-19 pandemic, acting as a mirror for collective emotional stress. We analyze both the audio features (e.g., acousticness, danceability) and lyrical sentiment (via NLP) of chart-topping songs against COVID-19 search trends.
+This project explores how public music consumption shifted during the COVID-19 pandemic, acting as a mirror for collective emotional stress. We analyze both the audio features (e.g., acousticness, danceability) and lyrical sentiment (via NLP) of chart-topping songs against COVID-19 search trends. If music sentiment reflects collective emotions, it could provide an early signal of societal stress or public attention.
+/>
+
 
 * **Topic:** The relationship between music sentiment, music attributes, and public attention to COVID-19 during the pandemic.
   
-* **Research Question(s):**
+* **Research Question:**
    How does the correlation between music attributes (melody and lyrics) and COVID-19 pandemic trends differ between the US and European markets?
 
 
