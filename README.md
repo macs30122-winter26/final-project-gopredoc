@@ -101,13 +101,16 @@ final-project-gopredoc/
 ```
 ### 📂 Folder Explanation
 
-* **`Data/`** – Raw and processed datasets used in the project.
-* **`Codes/`** – Scripts used for scraping Spotify charts, lyrics data, and Google Trends data.
-* **`Cleansing/`** – Notebooks used for cleaning and merging datasets.
-* **`EDA/`** – Exploratory data analysis notebooks.
-* **`Textual Analysis/`** – Natural language processing and sentiment analysis of lyrics.
-* **`Visualization/`** – Figures and visualizations used in analysis and presentations.
-* **`docs/`** – Project documentation and progress reports.
+* **`Codes/`** – The main directory containing all executable scripts and Jupyter Notebooks.
+  * **`Cleansing/`** – Notebooks used for merging and cleaning datasets.
+  * **`EDA/`** – Exploratory data analysis notebooks.
+  * **`Regression/`** – Step-by-step regression modeling, from data processing to robustness checks.
+  * **`Scraping/`** – Data collection scripts for Google Trends, Lyrics, and Spotify charts.
+  * **`Textual Analysis/`** – Natural language processing and sentiment analysis of the extracted lyrics (`lyrics_textanalysis.ipynb`).
+* **`Data/`** – Contains raw/processed data links (Dropbox) and Google Trends CSV datasets.
+* **`EDAViz_result/`** – Output folders containing figures, plots, and descriptive statistics separated by region (US, Europe, All Countries).
+* **`Regression_output/`** – Contains all resulting CSV tables and robustness check plots from the sentiment regression models.
+* **`Root Files`** – Project presentations (`.pptx`), progress reports (`.pdf`), and the project documentation (`README.md`).
 
 ---
 
