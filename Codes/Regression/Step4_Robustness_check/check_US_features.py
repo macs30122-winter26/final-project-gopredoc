@@ -10,7 +10,6 @@ where:
     L = number of weeks ahead (LAG_WEEKS)
 
 Purpose of this file:
-    This is a robustness check rather than a machine-learning exercise.
     The goal is to examine whether the contemporaneous relationship between
     music features and COVID search intensity remains informative when the
     dependent variable is shifted forward in time, and whether the estimated
