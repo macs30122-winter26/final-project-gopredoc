@@ -1,6 +1,6 @@
 """
 Calculate weekly average features from the original daily feature file
-to match the weekjly trend data to be merged later. 
+to match the weekly trend data to be merged later. 
 Writes modified versions to a subdirectory named 'top200_weekly_means_direct'.
 
 Tingrui Zhang
