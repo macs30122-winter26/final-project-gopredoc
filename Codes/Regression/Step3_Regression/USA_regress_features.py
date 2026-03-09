@@ -1,5 +1,6 @@
 """
-Run sequential regression models for COVID search intensity for US.
+Run OLS regressions of COVID search intensity on Spotify audio features
+using the standardized USA weekly panel dataset.
 
 Specification expansion:
 
@@ -8,9 +9,7 @@ Specification expansion:
 (3) COVID = β0 + β1 danceability + β2 energy + β3 loudness
 ...
 until all features are included.
-
-This produces a nested regression table similar to standard
-economics empirical papers.
+This produces a nested regression table.
 
 Tingrui Zhang
 AI statement: AI is used to enhance robustness of this file.
