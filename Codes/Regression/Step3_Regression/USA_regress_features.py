@@ -1,5 +1,5 @@
 """
-Sequential regression models for COVID search intensity.
+Run sequential regression models for COVID search intensity for US.
 
 Specification expansion:
 
