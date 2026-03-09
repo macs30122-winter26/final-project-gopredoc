@@ -44,9 +44,22 @@ final-project-gopredoc/
 │   │   └── EDA.ipynb
 │   ├── Regression/
 │   │   ├── Step1_Top200-Lyric Matching/
+|   |   |   ├── 1.1.match_lyrics.py
+|   |   |   └── 1.2.match_features.py
 │   │   ├── Step2_Data_processing_for_reg/
+|   |   |   ├── 2.1.data_cleaning_all.py
+|   |   |   ├── 2.2.average_features_all.py
+|   |   |   ├── 2.3.merge_trends_standardize_USA.py
+|   |   |   ├── 2.4.merge_trends_standardize_EU.py
+|   |   |   └── Sentiment_clean_match_trend.py
 │   │   ├── Step3_Regression/
+|   |   |   ├── EU_Sentiment_standardize_regress.py
+|   |   |   ├── EU_regress_features.py
+|   |   |   ├── USA_Sentiment_standardize_regress.py
+|   |   |   └── USA_regress_features.py
 │   │   └── Step4_Robustness_check/
+|   |   |   ├── check_US_features.py
+|   |   |   └── check_US_sentiment.py
 │   ├── Scraping/
 │   │   ├── Google Trends/
 │   │   │   ├── scrape_search_density_EU.py
@@ -82,12 +95,9 @@ final-project-gopredoc/
 │   ├── COVID_robustness_features_sentiment.png
 │   ├── EU_COVID_on_features_with_trend_country.csv
 │   ├── EU_COVID_on_features_with_trend_pooled.csv
-│   ├── EU_feature_regressions_with_trend.csv
-│   ├── EU_pooled_feature_regressions_with_trend.csv
 │   ├── EU_pooled_nested_regressions.csv
 │   ├── EU_sentiment_progressive.csv
 │   ├── USA_COVID_feature_regressions.csv
-│   ├── USA_feature_regressions_with_trend.csv
 │   ├── USA_nested_regressions.csv
 │   ├── USA_sentiment_progressive.csv
 │   ├── sentiment_regression_results_with_melody_valence.csv
@@ -145,7 +155,8 @@ final-project-gopredoc/
 * **Tingrui Zhang**
   * Implemented Google Trends API data collection scripts.
   * Processed COVID search frequency dataset.
-  * Conducted regression analysis comparing US and EU datasets.
+  * Merged spotify dataset with lyrics, sentiment, and features data, and standardized merged data.
+  * Conducted regression analysis and robustness checks comparing US and EU datasets.
 
 * **Yangshunshun (Luna) Lu**
   * Built repository structure.
