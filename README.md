@@ -167,10 +167,9 @@ The following AI tools were used during the project:
 
 ---
 
-## 🔗 Project Links
 
 ## 🔗 Project Links
 
 * **Slides used in the in-class presentation:** [GoPredoc_original.pptx](https://github.com/macs30122-winter26/final-project-gopredoc/blob/ff2bae2b0f97eec0aa7f336bec5ad011412895ee/GoPredoc_original.pptx)
 * **Updated final slides (full version):** [GoPredoc_final.pptx](https://github.com/macs30122-winter26/final-project-gopredoc/blob/ff2bae2b0f97eec0aa7f336bec5ad011412895ee/GoPredoc_final.pptx)
-* **Presentation video:** Link provided in the repository.
+* **Presentation video:** https://www.dropbox.com/scl/fo/mb71n1iuzmbmqcyfea5h5/ACb6H7ru4kDRzzd4C9b4tq4?rlkey=qruut7ptksw4ry75akgxxocyu&st=4d9seu11&dl=0
